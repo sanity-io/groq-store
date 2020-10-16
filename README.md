@@ -22,21 +22,9 @@ dataset.getDocuments(['grrm', 'jrrt']).then(([grrm, jrrt]) => {
   console.log(grrm, jrrt)
 })
 
-const sub = dataset
-  .liveQuery(
-    groq`
-    *[_type == "author"][0...3] {
-      name,
-      books[]->{
-        title,
-        releaseDate
-      }
-    }
-`
-  )
-  .subscribe((result) => {
-    console.log(result)
-  })
+const sub = dataset.subscribe(groq`*[_type == "author"][] {name}`, (result) => {
+  console.log(result)
+})
 
 // Later, to close live query:
 sub.unsubscribe()

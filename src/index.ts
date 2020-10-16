@@ -10,14 +10,14 @@ export interface Config {
   overlayDrafts?: boolean
 }
 
-export interface MemQueryApi {
-  query: (query: string, params?: Record<string, unknown>) => Promise<SanityDocument>
-  getDocument: (id: string) => Promise<SanityDocument | null>
-  getDocuments: (ids: string[]) => Promise<(SanityDocument | null)[]>
-  close: () => void
+export interface Subscription {
+  unsubscribe: () => void
 }
 
-export function memQuery(config: Config): MemQueryApi {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function memQuery(config: Config) {
+  checkBrowserSupport()
+
   const {projectId, dataset, listen, overlayDrafts} = config
   let documents: SanityDocument[] = []
 
@@ -43,11 +43,30 @@ export function memQuery(config: Config): MemQueryApi {
     return query(`[${subQueries}]`)
   }
 
+  function subscribe(
+    groqQuery: string,
+    params: Record<string, unknown>,
+    next: (result: any) => void
+  ): Subscription {
+    query(groqQuery, params).then(next)
+    const unsubscribe = () => {}
+    return {unsubscribe}
+  }
+
   function close() {
     // do nothing
   }
 
-  return {query, getDocument, getDocuments, close}
+  return {query, getDocument, getDocuments, subscribe, close}
+}
+
+function checkBrowserSupport() {
+  const required = ['EventSource', 'ReadableStream', 'fetch']
+  const unsupported = required.filter((api) => !(api in window))
+
+  if (unsupported.length > 0) {
+    throw new Error(`Browser not supported. Missing browser APIs: ${unsupported.join(', ')}`)
+  }
 }
 
 export {groq}
