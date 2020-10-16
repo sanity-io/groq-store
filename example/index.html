@@ -10,7 +10,7 @@
     <div id="root">
       <section>
         <h2>Query</h2>
-        <textarea id="query">*[_type == "product"]</textarea>
+        <textarea id="query">*[_type == "product"][0...2]</textarea>
         <div class="actions">
           <button id="execute" type="button">Execute query</button>
           <button id="execute-live" type="button">Live query</button>
@@ -26,6 +26,6 @@
       </section>
     </div>
 
-    <script src="src/example.ts"></script>
+    <script src="example.ts"></script>
   </body>
   </html>
