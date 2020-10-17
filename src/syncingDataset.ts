@@ -12,9 +12,13 @@ export function getSyncingDataset(
   config: Config,
   onUpdate: (docs: SanityDocument[]) => void
 ): Subscription & {loaded: Promise<void>} {
-  const {projectId, dataset, listen: useListener} = config
+  const {projectId, dataset, listen: useListener, overlayDrafts} = config
   if (!useListener) {
-    const loaded = getDocuments(projectId, dataset).then(onUpdate).then(noop)
+    const loaded = getDocuments(projectId, dataset)
+      .then((docs) => (overlayDrafts ? overlay(docs) : docs))
+      .then(onUpdate)
+      .then(noop)
+
     return {unsubscribe: noop, loaded}
   }
 
@@ -129,4 +133,25 @@ function applyBufferedMutations(
   })
 
   return documents
+}
+
+function overlay(documents: SanityDocument[]): SanityDocument[] {
+  const overlayed = new Map<string, SanityDocument>()
+
+  documents.forEach((doc) => {
+    const existing = overlayed.get(getPublishedId(doc))
+    if (doc._id.startsWith('drafts.')) {
+      // Drafts always overlay
+      overlayed.set(getPublishedId(doc), doc)
+    } else if (!existing) {
+      // Published documents only override if draft doesn't exist
+      overlayed.set(doc._id, doc)
+    }
+  })
+
+  return Array.from(overlayed.values())
+}
+
+function getPublishedId(document: SanityDocument): string {
+  return document._id.startsWith('drafts.') ? document._id.slice(7) : document._id
 }
