@@ -1,5 +1,6 @@
 import groq from 'groq'
 import deepEqual from 'fast-deep-equal'
+import {throttle} from 'throttle-debounce'
 import {SanityDocument} from '@sanity/types'
 import {parse, evaluate} from 'groq-js'
 import {listen} from './browser/listen'
@@ -11,10 +12,11 @@ export function memQuery(config: Config) {
   checkBrowserSupport()
 
   let documents: SanityDocument[] = []
+  const executeThrottled = throttle(config.subscriptionThrottleMs || 50, executeAllSubscriptions)
   const activeSubscriptions: GroqSubscription[] = []
   const dataset = getSyncingDataset(config, (docs) => {
     documents = docs
-    executeAllSubscriptions()
+    executeThrottled()
   })
 
   async function query<R = any>(groqQuery: string, params?: Record<string, unknown>): Promise<R> {
@@ -80,6 +82,8 @@ export function memQuery(config: Config) {
   }
 
   function close() {
+    executeThrottled.cancel()
+
     if (dataset) {
       dataset.unsubscribe()
     }

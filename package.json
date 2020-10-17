@@ -36,10 +36,12 @@
     "groq": "^2.0.1",
     "groq-js": "^0.1.8",
     "mendoza": "^2.0.1",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "throttle-debounce": "^2.3.0"
   },
   "devDependencies": {
     "@types/node-fetch": "^2.5.7",
+    "@types/throttle-debounce": "^2.1.0",
     "@typescript-eslint/parser": "^4.4.1",
     "eslint": "^6.0.0",
     "eslint-config-sanity": "^1.150.8",

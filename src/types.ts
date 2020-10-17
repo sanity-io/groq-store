@@ -5,6 +5,7 @@ export interface Config {
   dataset: string
   listen?: boolean
   overlayDrafts?: boolean
+  subscriptionThrottleMs?: number
 }
 
 export interface Subscription {
