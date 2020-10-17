@@ -1,16 +1,17 @@
-import {Subscription, MutationEvent} from '../types'
+import {Subscription, MutationEvent, Config} from './types'
 
 export function listen(
-  projectId: string,
-  dataset: string,
+  EventSourceImpl: typeof EventSource,
+  config: Config,
   handlers: {
     open: () => void
     error: (err: Event) => void
     next: (event: MutationEvent) => void
   }
 ): Subscription {
+  const {projectId, dataset} = config
   const url = `https://${projectId}.api.sanity.io/v1/data/listen/${dataset}?query=*&effectFormat=mendoza`
-  const es = new EventSource(url, {withCredentials: true})
+  const es = new EventSourceImpl(url, {withCredentials: true})
   es.addEventListener('welcome', handlers.open, false)
   es.addEventListener('error', handlers.error, false)
   es.addEventListener('mutation', getMutationParser(handlers.next), false)

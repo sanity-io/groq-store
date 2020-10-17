@@ -3,21 +3,21 @@ import deepEqual from 'fast-deep-equal'
 import {throttle} from 'throttle-debounce'
 import {SanityDocument} from '@sanity/types'
 import {parse, evaluate} from 'groq-js'
-import {listen} from './browser/listen'
-import {Config, GroqSubscription, Subscription} from './types'
+import {Config, EnvImplementations, GroqSubscription, MemQueryApi, Subscription} from './types'
 import {getSyncingDataset} from './syncingDataset'
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function memQuery(config: Config) {
-  checkBrowserSupport()
-
+export function memQuery(config: Config, implementations: EnvImplementations): MemQueryApi {
   let documents: SanityDocument[] = []
   const executeThrottled = throttle(config.subscriptionThrottleMs || 50, executeAllSubscriptions)
   const activeSubscriptions: GroqSubscription[] = []
-  const dataset = getSyncingDataset(config, (docs) => {
-    documents = docs
-    executeThrottled()
-  })
+  const dataset = getSyncingDataset(
+    config,
+    (docs) => {
+      documents = docs
+      executeThrottled()
+    },
+    implementations
+  )
 
   async function query<R = any>(groqQuery: string, params?: Record<string, unknown>): Promise<R> {
     await dataset.loaded
@@ -37,12 +37,12 @@ export function memQuery(config: Config) {
     return query(`[${subQueries}]`)
   }
 
-  function subscribe(
+  function subscribe<R = any>(
     groqQuery: string,
     params: Record<string, unknown>,
-    next: (result: any) => void
+    next: (result: R) => void
   ): Subscription {
-    if (!listen) {
+    if (!config.listen) {
       throw new Error('Cannot use `subscribe()` without `listen: true`')
     }
 
@@ -91,14 +91,3 @@ export function memQuery(config: Config) {
 
   return {query, getDocument, getDocuments, subscribe, close}
 }
-
-function checkBrowserSupport() {
-  const required = ['EventSource', 'ReadableStream', 'fetch']
-  const unsupported = required.filter((api) => !(api in window))
-
-  if (unsupported.length > 0) {
-    throw new Error(`Browser not supported. Missing browser APIs: ${unsupported.join(', ')}`)
-  }
-}
-
-export {groq, Subscription}

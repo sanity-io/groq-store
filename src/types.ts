@@ -34,3 +34,35 @@ export interface GroqSubscription {
   previousResult?: any
   callback: (res: any) => void
 }
+
+export interface EnvImplementations {
+  EventSource: typeof EventSource
+  getDocuments: (projectId: string, dataset: string) => Promise<SanityDocument[]>
+}
+
+export interface MemQueryApi {
+  query: <R = any>(groqQuery: string, params?: Record<string, unknown> | undefined) => Promise<R>
+  getDocument: (documentId: string) => Promise<SanityDocument | null>
+  getDocuments: (documentIds: string[]) => Promise<(SanityDocument | null)[]>
+  subscribe: <R = any>(
+    groqQuery: string,
+    params: Record<string, unknown>,
+    next: (result: R) => void
+  ) => Subscription
+  close: () => void
+}
+
+export interface ApiError {
+  statusCode: number
+  error: string
+  message: string
+}
+
+export interface StreamError {
+  error: {
+    description?: string
+    type: string
+  }
+}
+
+export type StreamResult = SanityDocument | StreamError

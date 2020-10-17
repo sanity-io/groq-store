@@ -1,9 +1,8 @@
 import {SanityDocument} from '@sanity/types'
-import {getDocuments} from './browser/getDocuments'
-import {listen} from './browser/listen'
+import {listen} from './listen'
 import {getPublishedId} from './drafts'
 import {applyPatchWithoutRev} from './patch'
-import {Config, MutationEvent, Subscription} from './types'
+import {Config, EnvImplementations, MutationEvent, Subscription} from './types'
 
 function noop() {
   // intentional noop
@@ -11,7 +10,8 @@ function noop() {
 
 export function getSyncingDataset(
   config: Config,
-  onNotifyUpdate: (docs: SanityDocument[]) => void
+  onNotifyUpdate: (docs: SanityDocument[]) => void,
+  {getDocuments, EventSource}: EnvImplementations
 ): Subscription & {loaded: Promise<void>} {
   const {projectId, dataset, listen: useListener, overlayDrafts} = config
 
@@ -34,7 +34,7 @@ export function getSyncingDataset(
     onDoneLoading = resolve
   })
 
-  const listener = listen(projectId, dataset, {
+  const listener = listen(EventSource, config, {
     next: onMutationReceived,
     open: onOpen,
     error: () => null,

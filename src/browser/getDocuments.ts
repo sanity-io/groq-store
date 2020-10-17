@@ -3,9 +3,14 @@ import {SanityDocument} from '@sanity/types'
 type StreamError = {error: {description?: string; type: string}}
 type StreamResult = SanityDocument | StreamError
 
-export async function getDocuments(projectId: string, dataset: string): Promise<SanityDocument[]> {
+export async function getDocuments(
+  projectId: string,
+  dataset: string,
+  token?: string
+): Promise<SanityDocument[]> {
   const url = `https://${projectId}.api.sanity.io/v1/data/export/${dataset}`
-  const response = await fetch(url, {credentials: 'include'})
+  const headers = token ? {Authorization: `Bearer ${token}`} : undefined
+  const response = await fetch(url, {credentials: 'include', headers})
 
   if (response.status !== 200) {
     throw new Error(`Error streaming dataset: ${getError(await response.json())}`)

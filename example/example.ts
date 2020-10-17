@@ -1,4 +1,4 @@
-import {memQuery, Subscription} from '../src'
+import {memQuery, Subscription} from '../src/browser'
 
 //
 ;(function () {
