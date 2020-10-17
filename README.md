@@ -1,7 +1,7 @@
 ## Proposed API
 
-```ts
-import {MemQuery} from '@sanity/memquery'
+```js
+import {MemQuery, groq} from '@sanity/memquery'
 
 const dataset = new MemQuery({
   projectId: 'abc123',
@@ -10,7 +10,7 @@ const dataset = new MemQuery({
   overlayDrafts: true,
 })
 
-dataset.query('*[_type == "author"]').then((docs) => {
+dataset.query(groq`*[_type == "author"]`).then((docs) => {
   console.log(docs)
 })
 
