@@ -24,6 +24,12 @@ export function getSyncingDataset(
 
   const indexedDocuments = new Map<string, SanityDocument>()
 
+  // These are individual buckets for draft and published versions of documents.
+  // We need these when using `overlayDrafts`, to properly switch documents when
+  // drafts appear and disappear
+  const drafts = new Map<string, SanityDocument>()
+  const published = new Map<string, SanityDocument>()
+
   // undefined until the listener has been set up and the initial export is done
   let documents: SanityDocument[] | undefined
 
@@ -44,6 +50,14 @@ export function getSyncingDataset(
 
   return {unsubscribe: listener.unsubscribe, loaded}
 
+  async function onOpen() {
+    const initial = await getDocuments(projectId, dataset)
+    documents = applyBufferedMutations(initial, buffer)
+    documents.forEach((doc) => indexedDocuments.set(doc._id, doc))
+    onUpdate(documents)
+    onDoneLoading()
+  }
+
   function onMutationReceived(msg: MutationEvent) {
     if (documents) {
       applyMutation(msg)
@@ -51,14 +65,6 @@ export function getSyncingDataset(
     } else {
       buffer.push(msg)
     }
-  }
-
-  async function onOpen() {
-    const initial = await getDocuments(projectId, dataset)
-    documents = applyBufferedMutations(initial, buffer)
-    documents.forEach((doc) => indexedDocuments.set(doc._id, doc))
-    onUpdate(documents)
-    onDoneLoading()
   }
 
   function applyMutation(msg: MutationEvent) {
