@@ -1,6 +1,7 @@
 import {SanityDocument} from '@sanity/types'
 import {getDocuments} from './browser/getDocuments'
 import {listen} from './browser/listen'
+import {getPublishedId} from './drafts'
 import {applyPatchWithoutRev} from './patch'
 import {Config, MutationEvent, Subscription} from './types'
 
@@ -10,25 +11,16 @@ function noop() {
 
 export function getSyncingDataset(
   config: Config,
-  onUpdate: (docs: SanityDocument[]) => void
+  onNotifyUpdate: (docs: SanityDocument[]) => void
 ): Subscription & {loaded: Promise<void>} {
   const {projectId, dataset, listen: useListener, overlayDrafts} = config
-  if (!useListener) {
-    const loaded = getDocuments(projectId, dataset)
-      .then((docs) => (overlayDrafts ? overlay(docs) : docs))
-      .then(onUpdate)
-      .then(noop)
 
+  if (!useListener) {
+    const loaded = getDocuments(projectId, dataset).then(onUpdate).then(noop)
     return {unsubscribe: noop, loaded}
   }
 
   const indexedDocuments = new Map<string, SanityDocument>()
-
-  // These are individual buckets for draft and published versions of documents.
-  // We need these when using `overlayDrafts`, to properly switch documents when
-  // drafts appear and disappear
-  const drafts = new Map<string, SanityDocument>()
-  const published = new Map<string, SanityDocument>()
 
   // undefined until the listener has been set up and the initial export is done
   let documents: SanityDocument[] | undefined
@@ -65,6 +57,10 @@ export function getSyncingDataset(
     } else {
       buffer.push(msg)
     }
+  }
+
+  function onUpdate(docs: SanityDocument[]) {
+    onNotifyUpdate(overlayDrafts ? overlay(docs) : docs)
   }
 
   function applyMutation(msg: MutationEvent) {
@@ -148,7 +144,7 @@ function overlay(documents: SanityDocument[]): SanityDocument[] {
     const existing = overlayed.get(getPublishedId(doc))
     if (doc._id.startsWith('drafts.')) {
       // Drafts always overlay
-      overlayed.set(getPublishedId(doc), doc)
+      overlayed.set(getPublishedId(doc), pretendThatItsPublished(doc))
     } else if (!existing) {
       // Published documents only override if draft doesn't exist
       overlayed.set(doc._id, doc)
@@ -158,6 +154,8 @@ function overlay(documents: SanityDocument[]): SanityDocument[] {
   return Array.from(overlayed.values())
 }
 
-function getPublishedId(document: SanityDocument): string {
-  return document._id.startsWith('drafts.') ? document._id.slice(7) : document._id
+// Strictly speaking it would be better to allow groq-js to resolve `draft.<id>`,
+// but for now this will have to do
+function pretendThatItsPublished(doc: SanityDocument): SanityDocument {
+  return {...doc, _id: getPublishedId(doc)}
 }
