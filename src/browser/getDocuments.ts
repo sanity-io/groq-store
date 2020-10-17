@@ -23,7 +23,7 @@ export async function getDocuments(projectId: string, dataset: string): Promise<
 
     if (isStreamError(document)) {
       throw new Error(`Error streaming dataset: ${document.error}`)
-    } else if (document) {
+    } else if (document && isRelevantDocument(document)) {
       documents.push(document)
     }
   } while (!result.done)
@@ -132,4 +132,8 @@ function getError(body: any): string {
   }
 
   return '<unknown error>'
+}
+
+function isRelevantDocument(doc: SanityDocument): boolean {
+  return !doc._id.startsWith('_.')
 }

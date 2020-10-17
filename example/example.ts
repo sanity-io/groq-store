@@ -10,9 +10,10 @@ import {memQuery, Subscription} from '../src'
   const subscribeBtnEl = document.getElementById('subscribe') as HTMLButtonElement
 
   attach()
+  populate()
 
   let subscription: Subscription | undefined
-  const dataset = memQuery({projectId: 'memquery', dataset: 'fixture'})
+  const dataset = memQuery({projectId: 'memquery', dataset: 'fixture', listen: true})
 
   function attach() {
     clearBtnEl.addEventListener('click', clear, false)
@@ -21,8 +22,17 @@ import {memQuery, Subscription} from '../src'
     queryEl.addEventListener('keyup', onKeyUp, false)
   }
 
+  function populate() {
+    if (!localStorage.memquery) {
+      return
+    }
+
+    queryEl.value = localStorage.memquery
+  }
+
   async function execute() {
     resultEl.value = '… querying …'
+    localStorage.setItem('memquery', queryEl.value)
     onResult(await dataset.query(queryEl.value))
   }
 

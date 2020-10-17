@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Stream dataset to memory for in-memory querying",
   "main": "lib/index.js",
+  "sideEffects": "false",
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
