@@ -1,6 +1,6 @@
 {
   "name": "@sanity/groq-store",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Stream dataset to memory for in-memory querying",
   "main": "dist/node/groq-store.js",
   "browser": "dist/browser/groq-store.js",
