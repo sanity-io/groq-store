@@ -20,7 +20,7 @@ export function listen(
 
   es.addEventListener(
     'channelError',
-    ((msg: MessageEvent<string>) => {
+    (msg: any) => {
       es.close()
 
       let data
@@ -34,7 +34,7 @@ export function listen(
       handlers.error(
         new Error(data.message || data.error || `Listener returned HTTP ${data.statusCode}`)
       )
-    }) as any,
+    },
     false
   )
 

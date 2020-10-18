@@ -8,7 +8,7 @@
   "typings": "dist/node/node/index.d.ts",
   "sideEffects": "false",
   "scripts": {
-    "start": "tsdx watch",
+    "start": "cd example && npm start",
     "prebuild": "rimraf dist",
     "build": "npm run build:node && npm run build:browser",
     "build:node": "microbundle -i src/node/index.ts -o dist/node -f cjs --target=node",
