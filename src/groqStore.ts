@@ -3,10 +3,10 @@ import deepEqual from 'fast-deep-equal'
 import {throttle} from 'throttle-debounce'
 import {SanityDocument} from '@sanity/types'
 import {parse, evaluate} from 'groq-js'
-import {Config, EnvImplementations, GroqSubscription, MemQueryApi, Subscription} from './types'
+import {Config, EnvImplementations, GroqSubscription, GroqStore, Subscription} from './types'
 import {getSyncingDataset} from './syncingDataset'
 
-export function memQuery(config: Config, implementations: EnvImplementations): MemQueryApi {
+export function groqStore(config: Config, implementations: EnvImplementations): GroqStore {
   let documents: SanityDocument[] = []
   const executeThrottled = throttle(config.subscriptionThrottleMs || 50, executeAllSubscriptions)
   const activeSubscriptions: GroqSubscription[] = []

@@ -1,13 +1,13 @@
 import EventSource from 'eventsource'
-import {memQuery as configurableMemQuery} from '../memquery'
-import {Config, EnvImplementations, MemQueryApi} from '../types'
+import {groqStore as groqStoreApi} from '../groqStore'
+import {Config, EnvImplementations, GroqStore} from '../types'
 import {getDocuments} from './getDocuments'
 import {assertEnvSupport} from './support'
 
-export function memQuery(config: Config): MemQueryApi {
+export function groqStore(config: Config): GroqStore {
   assertEnvSupport()
 
-  return configurableMemQuery(config, {
+  return groqStoreApi(config, {
     EventSource: (EventSource as any) as EnvImplementations['EventSource'],
     getDocuments,
   })

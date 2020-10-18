@@ -1,7 +1,7 @@
 import sanityClient, {SanityClient} from '@sanity/client'
 import * as config from './config'
-import {memQuery, groq} from '../src/node'
-import {MemQueryApi} from '../src/types'
+import {groqStore, groq} from '../src/node'
+import {GroqStore} from '../src/types'
 
 const describeSubscribe = config.token ? describe : describe.skip
 
@@ -9,7 +9,7 @@ describeSubscribe('subscribe', () => {
   jest.setTimeout(15000)
 
   let client: SanityClient
-  let store: MemQueryApi
+  let store: GroqStore
 
   function deleteFixtureDocs() {
     return client
@@ -25,7 +25,7 @@ describeSubscribe('subscribe', () => {
     client = sanityClient({...config, useCdn: false})
     await deleteFixtureDocs()
 
-    store = memQuery({...config, listen: true, overlayDrafts: true})
+    store = groqStore({...config, listen: true, overlayDrafts: true})
   })
 
   afterAll(async () => {

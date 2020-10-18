@@ -41,7 +41,7 @@ export interface EnvImplementations {
   getDocuments: (projectId: string, dataset: string) => Promise<SanityDocument[]>
 }
 
-export interface MemQueryApi {
+export interface GroqStore {
   query: <R = any>(groqQuery: string, params?: Record<string, unknown> | undefined) => Promise<R>
   getDocument: (documentId: string) => Promise<SanityDocument | null>
   getDocuments: (documentIds: string[]) => Promise<(SanityDocument | null)[]>

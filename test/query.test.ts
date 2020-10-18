@@ -1,14 +1,14 @@
 import * as config from './config'
-import {memQuery, groq} from '../src/node'
-import {MemQueryApi} from '../src/types'
+import {groqStore, groq} from '../src/node'
+import {GroqStore} from '../src/types'
 
 describe('query', () => {
   jest.setTimeout(30000)
 
-  let store: MemQueryApi
+  let store: GroqStore
 
   beforeAll(() => {
-    store = memQuery({...config, listen: false, overlayDrafts: true})
+    store = groqStore({...config, listen: false, overlayDrafts: true})
   })
 
   afterAll(async () => {

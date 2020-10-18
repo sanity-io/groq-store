@@ -1,4 +1,4 @@
-import {memQuery, Subscription} from '../src/browser'
+import {groqStore, Subscription} from '../src/browser'
 
 //
 ;(function () {
@@ -13,7 +13,7 @@ import {memQuery, Subscription} from '../src/browser'
   populate()
 
   let subscription: Subscription | undefined
-  const dataset = memQuery({projectId: 'groqstore', dataset: 'fixture', listen: true})
+  const dataset = groqStore({projectId: 'groqstore', dataset: 'fixture', listen: true})
 
   function attach() {
     clearBtnEl.addEventListener('click', clear, false)
@@ -23,16 +23,16 @@ import {memQuery, Subscription} from '../src/browser'
   }
 
   function populate() {
-    if (!localStorage.memquery) {
+    if (!localStorage.groqStore) {
       return
     }
 
-    queryEl.value = localStorage.memquery
+    queryEl.value = localStorage.groqStore
   }
 
   async function execute() {
     resultEl.value = '… querying …'
-    localStorage.setItem('memquery', queryEl.value)
+    localStorage.setItem('groqStore', queryEl.value)
     try {
       onResult(await dataset.query(queryEl.value))
     } catch (err) {

@@ -1,10 +1,10 @@
 {
-  "name": "@sanity/memquery",
+  "name": "@sanity/groq-store",
   "version": "1.0.0",
   "description": "Stream dataset to memory for in-memory querying",
-  "main": "dist/node/memquery.js",
-  "browser": "dist/browser/memquery.js",
-  "module": "dist/browser/memquery.modern.js",
+  "main": "dist/node/groq-store.js",
+  "browser": "dist/browser/groq-store.js",
+  "module": "dist/browser/groq-store.modern.js",
   "typings": "dist/node/node/index.d.ts",
   "sideEffects": "false",
   "scripts": {
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/sanity-io/memquery.git"
+    "url": "git+ssh://git@github.com/sanity-io/groq-store.git"
   },
   "keywords": [
     "sanity",
@@ -33,9 +33,9 @@
   "author": "Sanity.io <hello@sanity.io>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sanity-io/memquery/issues"
+    "url": "https://github.com/sanity-io/groq-store/issues"
   },
-  "homepage": "https://github.com/sanity-io/memquery#readme",
+  "homepage": "https://github.com/sanity-io/groq-store#readme",
   "dependencies": {
     "@sanity/types": "^2.0.1",
     "eventsource": "^1.0.7",
