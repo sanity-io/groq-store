@@ -43,6 +43,7 @@
     "groq": "^2.0.1",
     "groq-js": "^0.1.8",
     "mendoza": "^2.0.1",
+    "simple-get": "^4.0.0",
     "split2": "^3.2.2",
     "throttle-debounce": "^2.3.0"
   },

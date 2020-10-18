@@ -1,5 +1,5 @@
-import https from 'https'
 import split from 'split2'
+import get from 'simple-get'
 import {SanityDocument} from '@sanity/types'
 import {StreamResult} from '../types'
 import {getError, isRelevantDocument, isStreamError} from '../exportUtils'
@@ -10,16 +10,16 @@ export function getDocuments(
   token?: string
 ): Promise<SanityDocument[]> {
   const headers = token ? {Authorization: `Bearer ${token}`} : undefined
-  const options: https.RequestOptions = {
-    hostname: `${projectId}.api.sanity.io`,
-    path: `/v1/data/export/${dataset}`,
-    protocol: 'https:',
-    headers,
-  }
 
   return new Promise((resolve, reject) => {
-    https
-      .request(options, (response) => {
+    get(
+      {url: `https://${projectId}.api.sanity.io/v1/data/export/${dataset}`, headers},
+      (err, response) => {
+        if (err) {
+          reject(err)
+          return
+        }
+
         response.setEncoding('utf8')
 
         const chunks: Buffer[] = []
@@ -47,7 +47,7 @@ export function getDocuments(
             }
           })
           .on('end', () => resolve(documents))
-      })
-      .end()
+      }
+    )
   })
 }
