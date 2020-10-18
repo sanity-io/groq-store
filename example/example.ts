@@ -13,7 +13,12 @@ import {groqStore, Subscription} from '../src/browser'
   populate()
 
   let subscription: Subscription | undefined
-  const dataset = groqStore({projectId: 'groqstore', dataset: 'fixture', listen: true})
+  const dataset = groqStore({
+    projectId: 'groqstore',
+    dataset: 'fixture',
+    listen: true,
+    overlayDrafts: true,
+  })
 
   function attach() {
     clearBtnEl.addEventListener('click', clear, false)
