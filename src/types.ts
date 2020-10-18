@@ -4,12 +4,13 @@ export interface Config {
   projectId: string
   dataset: string
   listen?: boolean
+  token?: string
   overlayDrafts?: boolean
   subscriptionThrottleMs?: number
 }
 
 export interface Subscription {
-  unsubscribe: () => void
+  unsubscribe: () => Promise<void>
 }
 
 export type MutationEvent = {
@@ -49,7 +50,7 @@ export interface MemQueryApi {
     params: Record<string, unknown>,
     next: (result: R) => void
   ) => Subscription
-  close: () => void
+  close: () => Promise<void>
 }
 
 export interface ApiError {

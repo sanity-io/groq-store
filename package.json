@@ -48,6 +48,7 @@
     "throttle-debounce": "^2.3.0"
   },
   "devDependencies": {
+    "@sanity/client": "^2.0.1",
     "@types/eventsource": "^1.1.4",
     "@types/split2": "^2.1.6",
     "@types/throttle-debounce": "^2.1.0",
@@ -61,5 +62,8 @@
     "tsdx": "^0.14.1",
     "tslib": "^2.0.3",
     "typescript": "^4.0.3"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }

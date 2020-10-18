@@ -4,8 +4,10 @@ import {getPublishedId} from './drafts'
 import {applyPatchWithoutRev} from './patch'
 import {Config, EnvImplementations, MutationEvent, Subscription} from './types'
 
+const DEBOUNCE_MS = 25
+
 function noop() {
-  // intentional noop
+  return Promise.resolve()
 }
 
 export function getSyncingDataset(
@@ -30,14 +32,24 @@ export function getSyncingDataset(
 
   // Return a promise we can resolve once we've established a listener and reconciled any mutations
   let onDoneLoading: () => void
-  const loaded = new Promise<void>((resolve) => {
+  let onLoadError: (error: Error) => void
+  const loaded = new Promise<void>((resolve, reject) => {
     onDoneLoading = resolve
+    onLoadError = reject
   })
+
+  // We don't want to flush updates while we're in the same transaction, so a normal
+  // throttle/debounce wouldn't do it. We need to wait and see if the next mutation is
+  // within the same transaction as the previous, and if not we can flush. Of course,
+  // we can't wait forever, so an upper threshold of X ms should be counted as "ok to flush"
+  let stagedDocs: SanityDocument[] | undefined
+  let previousTrx: string | undefined
+  let flushTimeout: number | undefined
 
   const listener = listen(EventSource, config, {
     next: onMutationReceived,
     open: onOpen,
-    error: () => null,
+    error: (error: Error) => onLoadError(error),
   })
 
   return {unsubscribe: listener.unsubscribe, loaded}
@@ -53,13 +65,32 @@ export function getSyncingDataset(
   function onMutationReceived(msg: MutationEvent) {
     if (documents) {
       applyMutation(msg)
-      onUpdate(documents)
+      scheduleUpdate(documents, msg)
     } else {
       buffer.push(msg)
     }
   }
 
+  function scheduleUpdate(docs: SanityDocument[], msg: MutationEvent) {
+    clearTimeout(flushTimeout)
+
+    if (previousTrx !== msg.transactionId && stagedDocs) {
+      // This is a new transaction, meaning we can immediately flush any pending
+      // doc updates if there are any
+      onUpdate(stagedDocs)
+      previousTrx = undefined
+    } else {
+      previousTrx = msg.transactionId
+      stagedDocs = docs.slice()
+    }
+
+    flushTimeout = setTimeout(onUpdate, DEBOUNCE_MS, docs.slice())
+  }
+
   function onUpdate(docs: SanityDocument[]) {
+    stagedDocs = undefined
+    flushTimeout = undefined
+    previousTrx = undefined
     onNotifyUpdate(overlayDrafts ? overlay(docs) : docs)
   }
 
@@ -111,7 +142,7 @@ function applyBufferedMutations(
     if (!document) {
       // @todo handle
       // eslint-disable-next-line no-console
-      console.warn('Received mutation for missing document')
+      console.warn('Received mutation for missing document %s', id)
       return
     }
 

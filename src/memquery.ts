@@ -55,11 +55,12 @@ export function memQuery(config: Config, implementations: EnvImplementations): M
     let unsubscribed = false
     const unsubscribe = () => {
       if (unsubscribed) {
-        return
+        return Promise.resolve()
       }
 
       unsubscribed = true
       activeSubscriptions.splice(activeSubscriptions.indexOf(subscription), 1)
+      return Promise.resolve()
     }
 
     executeQuerySubscription(subscription)
@@ -83,10 +84,7 @@ export function memQuery(config: Config, implementations: EnvImplementations): M
 
   function close() {
     executeThrottled.cancel()
-
-    if (dataset) {
-      dataset.unsubscribe()
-    }
+    return dataset ? dataset.unsubscribe() : Promise.resolve()
   }
 
   return {query, getDocument, getDocuments, subscribe, close}

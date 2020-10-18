@@ -13,7 +13,7 @@ import {memQuery, Subscription} from '../src/browser'
   populate()
 
   let subscription: Subscription | undefined
-  const dataset = memQuery({projectId: 'memquery', dataset: 'fixture', listen: true})
+  const dataset = memQuery({projectId: 'groqstore', dataset: 'fixture', listen: true})
 
   function attach() {
     clearBtnEl.addEventListener('click', clear, false)
@@ -33,7 +33,11 @@ import {memQuery, Subscription} from '../src/browser'
   async function execute() {
     resultEl.value = '… querying …'
     localStorage.setItem('memquery', queryEl.value)
-    onResult(await dataset.query(queryEl.value))
+    try {
+      onResult(await dataset.query(queryEl.value))
+    } catch (err) {
+      onError(err.message || 'Unknown error')
+    }
   }
 
   function subscribe() {
@@ -54,6 +58,10 @@ import {memQuery, Subscription} from '../src/browser'
   function onResult(queryResult: any) {
     const json = JSON.stringify(queryResult, null, 2)
     resultEl.value = json
+  }
+
+  function onError(msg: string) {
+    resultEl.value = `/*** ERROR ***/\n\n${msg}`
   }
 
   function onKeyUp(evt: KeyboardEvent) {
