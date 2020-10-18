@@ -15,7 +15,7 @@
     "build:browser": "microbundle -i src/browser/index.ts -o dist/browser -f modern,cjs",
     "test": "tsdx test",
     "lint": "tsdx lint",
-    "prepare": "tsdx build"
+    "prepare": "npm run build"
   },
   "engines": {
     "node": ">=10"
