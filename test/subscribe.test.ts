@@ -1,7 +1,6 @@
 import sanityClient, {SanityClient} from '@sanity/client'
 import * as config from './config'
-import {groqStore, groq} from '../src/node'
-import {GroqStore} from '../src/types'
+import {groqStore, groq, GroqStore} from '../src'
 
 const describeSubscribe = config.token ? describe : describe.skip
 

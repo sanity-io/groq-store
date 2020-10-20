@@ -1,5 +1,5 @@
 import * as config from './config'
-import {groqStore, groq} from '../src/node'
+import {groqStore, groq} from '../src'
 import {GroqStore} from '../src/types'
 
 describe('query', () => {
