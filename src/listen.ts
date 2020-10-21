@@ -40,7 +40,15 @@ export function listen(
 
   es.addEventListener(
     'error',
-    () => handlers.error(new Error('Error establishing listener - check project ID and dataset')),
+    () => {
+      const origin = typeof window !== 'undefined' && window.location.origin
+      const hintSuffix = origin ? `, and that the CORS-origin (${origin}) is allowed` : ''
+      handlers.error(
+        new Error(
+          `Error establishing listener - check that the project ID and dataset are correct${hintSuffix}`
+        )
+      )
+    },
     false
   )
 
