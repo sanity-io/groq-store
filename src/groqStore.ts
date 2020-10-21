@@ -6,33 +6,42 @@ import {parse, evaluate} from 'groq-js'
 import {Config, EnvImplementations, GroqSubscription, GroqStore, Subscription} from './types'
 import {getSyncingDataset} from './syncingDataset'
 
-export function groqStore(config: Config, implementations: EnvImplementations): GroqStore {
+export function groqStore(config: Config, envImplementations: EnvImplementations): GroqStore {
   let documents: SanityDocument[] = []
   const executeThrottled = throttle(config.subscriptionThrottleMs || 50, executeAllSubscriptions)
   const activeSubscriptions: GroqSubscription[] = []
-  const dataset = getSyncingDataset(
-    config,
-    (docs) => {
-      documents = docs
-      executeThrottled()
-    },
-    implementations
-  )
+
+  let dataset: Subscription & {loaded: Promise<void>}
+
+  async function loadDataset() {
+    if (!dataset) {
+      dataset = getSyncingDataset(
+        config,
+        (docs) => {
+          documents = docs
+          executeThrottled()
+        },
+        envImplementations
+      )
+    }
+
+    await dataset.loaded
+  }
 
   async function query<R = any>(groqQuery: string, params?: Record<string, unknown>): Promise<R> {
-    await dataset.loaded
+    await loadDataset()
     const tree = parse(groqQuery)
     const result = await evaluate(tree, {dataset: documents, params})
     return result.get()
   }
 
   async function getDocument(documentId: string): Promise<SanityDocument | null> {
-    await dataset.loaded
+    await loadDataset()
     return query(groq`*[_id == $id][0]`, {id: documentId})
   }
 
   async function getDocuments(documentIds: string[]): Promise<(SanityDocument | null)[]> {
-    await dataset.loaded
+    await loadDataset()
     const subQueries = documentIds.map((id) => `*[_id == "${id}"][0]`).join(',\n')
     return query(`[${subQueries}]`)
   }

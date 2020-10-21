@@ -33,7 +33,7 @@ export interface GroqSubscription {
   query: string
   params: Record<string, unknown>
   previousResult?: any
-  callback: (res: any) => void
+  callback: (err: Error | undefined, result?: any) => void
 }
 
 export interface EnvImplementations {
@@ -48,7 +48,7 @@ export interface GroqStore {
   subscribe: <R = any>(
     groqQuery: string,
     params: Record<string, unknown>,
-    next: (result: R) => void
+    callback: (err: Error | undefined, result?: R) => void
   ) => Subscription
   close: () => Promise<void>
 }

@@ -59,7 +59,11 @@ describeSubscribe('subscribe', () => {
         "slug": slug.current
       }`,
       {slug: 'fox'},
-      async (fox: unknown) => {
+      async (err: Error | undefined, fox: unknown) => {
+        if (err) {
+          throw err
+        }
+
         const numUpdates = updates.push(fox)
         switch (numUpdates) {
           case 1:

@@ -56,7 +56,14 @@ store.getDocuments(['grrm', 'jrrt']).then(([grrm, jrrt]) => {
 const sub = store.subscribe(
   groq`*[_type == $type][] {name}`, // Query
   {type: 'author'}, // Params
-  (result) => console.log(result)
+  (err, result) => {
+    if (err) {
+      console.error('Oh no, an error:', err)
+      return
+    }
+
+    console.log('Result:', result)
+  }
 )
 
 // Later, to close subscription:
