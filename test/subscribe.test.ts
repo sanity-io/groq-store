@@ -9,6 +9,7 @@ describeSubscribe('subscribe', () => {
 
   let client: SanityClient
   let store: GroqStore
+  let errStore: GroqStore
 
   function deleteFixtureDocs() {
     return client
@@ -25,11 +26,23 @@ describeSubscribe('subscribe', () => {
     await deleteFixtureDocs()
 
     store = groqStore({...config, listen: true, overlayDrafts: true})
+    errStore = groqStore({...config, projectId: 'n-o-p-e', listen: true, overlayDrafts: true})
   })
 
   afterAll(async () => {
     await store.close()
+    await errStore.close()
     await deleteFixtureDocs()
+  })
+
+  test('integration: callback gets error on listener failure', (done) => {
+    errStore.subscribe('*[0]', {}, (err, result) => {
+      expect(err).toBeDefined()
+      expect(err?.message).toMatch(/dataset.*?not found for project/i)
+      expect(result).toBeUndefined()
+
+      errStore.close().then(done)
+    })
   })
 
   test('integration: can subscribe', async () => {
