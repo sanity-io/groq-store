@@ -49,7 +49,7 @@ export function groqStore(config: Config, envImplementations: EnvImplementations
   function subscribe<R = any>(
     groqQuery: string,
     params: Record<string, unknown>,
-    next: (result: R) => void
+    callback: (error: Error | undefined, result?: R) => void
   ): Subscription {
     if (!config.listen) {
       throw new Error('Cannot use `subscribe()` without `listen: true`')
@@ -58,7 +58,7 @@ export function groqStore(config: Config, envImplementations: EnvImplementations
     // @todo Execute the query against an empty dataset for validation purposes
 
     // Store the subscription so we can re-run the query on new data
-    const subscription = {query: groqQuery, params, callback: next}
+    const subscription = {query: groqQuery, params, callback}
     activeSubscriptions.push(subscription)
 
     let unsubscribed = false
@@ -77,14 +77,18 @@ export function groqStore(config: Config, envImplementations: EnvImplementations
   }
 
   function executeQuerySubscription(subscription: GroqSubscription) {
-    return query(subscription.query, subscription.params).then((res) => {
-      if ('previousResult' in subscription && deepEqual(subscription.previousResult, res)) {
-        return
-      }
+    return query(subscription.query, subscription.params)
+      .then((res) => {
+        if ('previousResult' in subscription && deepEqual(subscription.previousResult, res)) {
+          return
+        }
 
-      subscription.previousResult = res
-      subscription.callback(res)
-    })
+        subscription.previousResult = res
+        subscription.callback(undefined, res)
+      })
+      .catch((err) => {
+        subscription.callback(err)
+      })
   }
 
   function executeAllSubscriptions() {
