@@ -1,14 +1,20 @@
 import split from 'split2'
 import get from 'simple-get'
 import {SanityDocument} from '@sanity/types'
-import {StreamResult} from '../types'
+import {EnvImplementations, StreamResult} from '../types'
 import {getError, isRelevantDocument, isStreamError} from '../exportUtils'
 
-export function getDocuments(
-  projectId: string,
-  dataset: string,
+export const getDocuments: EnvImplementations['getDocuments'] = function getDocuments({
+  projectId,
+  dataset,
+  token,
+  documentLimit,
+}: {
+  projectId: string
+  dataset: string
   token?: string
-): Promise<SanityDocument[]> {
+  documentLimit?: number
+}): Promise<SanityDocument[]> {
   const headers = token ? {Authorization: `Bearer ${token}`} : undefined
 
   return new Promise((resolve, reject) => {
@@ -44,6 +50,13 @@ export function getDocuments(
 
             if (doc && isRelevantDocument(doc)) {
               documents.push(doc)
+            }
+
+            if (documentLimit && documents.length > documentLimit) {
+              reject(
+                new Error(`Error streaming dataset: Reached limit of ${documentLimit} documents`)
+              )
+              response.destroy()
             }
           })
           .on('end', () => resolve(documents))

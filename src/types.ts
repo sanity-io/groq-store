@@ -5,6 +5,7 @@ export interface Config {
   dataset: string
   listen?: boolean
   token?: string
+  documentLimit?: number
   overlayDrafts?: boolean
   subscriptionThrottleMs?: number
 }
@@ -38,7 +39,12 @@ export interface GroqSubscription {
 
 export interface EnvImplementations {
   EventSource: typeof EventSource
-  getDocuments: (projectId: string, dataset: string) => Promise<SanityDocument[]>
+  getDocuments: (options: {
+    projectId: string
+    dataset: string
+    token?: string
+    documentLimit?: number
+  }) => Promise<SanityDocument[]>
 }
 
 export interface GroqStore {

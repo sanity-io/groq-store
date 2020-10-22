@@ -37,8 +37,12 @@ const store = groqStore({
   overlayDrafts: true,
 
   // Optional token, if you want to receive drafts, or read data from private datasets
-  // NOTE: Does _not_ work in browsers yet
+  // NOTE: Does _not_ work in browsers (yet)
   token: 'someAuthToken',
+
+  // Optional limit on number of documents, to prevent using too much memory unexpectedly
+  // Throws on the first operation (query, retrieval, subscription) if reaching this limit.
+  documentLimit: 10000,
 })
 
 store.query(groq`*[_type == "author"]`).then((docs) => {

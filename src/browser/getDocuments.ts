@@ -1,13 +1,20 @@
 import {SanityDocument} from '@sanity/types'
+import {EnvImplementations} from '../types'
 
 type StreamError = {error: {description?: string; type: string}}
 type StreamResult = SanityDocument | StreamError
 
-export async function getDocuments(
-  projectId: string,
-  dataset: string,
+export const getDocuments: EnvImplementations['getDocuments'] = async function getDocuments({
+  projectId,
+  dataset,
+  token,
+  documentLimit,
+}: {
+  projectId: string
+  dataset: string
   token?: string
-): Promise<SanityDocument[]> {
+  documentLimit?: number
+}): Promise<SanityDocument[]> {
   const url = `https://${projectId}.api.sanity.io/v1/data/export/${dataset}`
   const headers = token ? {Authorization: `Bearer ${token}`} : undefined
   const response = await fetch(url, {credentials: 'include', headers})
@@ -30,6 +37,11 @@ export async function getDocuments(
       throw new Error(`Error streaming dataset: ${document.error}`)
     } else if (document && isRelevantDocument(document)) {
       documents.push(document)
+    }
+
+    if (documentLimit && documents.length > documentLimit) {
+      reader.cancel('Reached document limit')
+      throw new Error(`Error streaming dataset: Reached limit of ${documentLimit} documents`)
     }
   } while (!result.done)
 

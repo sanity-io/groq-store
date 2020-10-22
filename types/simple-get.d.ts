@@ -2,7 +2,7 @@
 
 /// <reference types="node" />
 declare module 'simple-get' {
-  import {Request} from 'https'
+  import {IncomingMessage} from 'http'
 
   interface Options {
     url: string
@@ -11,7 +11,7 @@ declare module 'simple-get' {
 
   function simpleGet(
     options: Options,
-    callback: (err: Error | undefined, res: Request) => void
+    callback: (err: Error | undefined, res: IncomingMessage) => void
   ): void
 
   export = simpleGet
