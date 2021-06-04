@@ -48,6 +48,9 @@ const store = groqStore({
   // Optional EventSource. Necessary to authorize using token in the browser, since
   // the native window.EventSource does not accept headers.
   // EventSource: SanityEventSource,
+
+  // Optional allow list filter for document types. You can use this to limit the amount of documents by declaring the types you want to sync. Note that since you're fetching a subset of your dataset, queries that works against your Content Lake might not work against the local groq-store.
+  allowTypes: ['post', 'page', 'product', 'sanity.imageAsset'],
 })
 
 store.query(groq`*[_type == "author"]`).then((docs) => {

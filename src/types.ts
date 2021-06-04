@@ -35,6 +35,7 @@ export interface EnvImplementations {
     dataset: string
     token?: string
     documentLimit?: number
+    allowTypes?: string[]
   }) => Promise<SanityDocument[]>
 }
 
@@ -47,6 +48,7 @@ export interface Config {
   overlayDrafts?: boolean
   subscriptionThrottleMs?: number
   EventSource?: EnvImplementations['EventSource']
+  allowTypes?: string[]
 }
 export interface GroqStore {
   query: <R = any>(groqQuery: string, params?: Record<string, unknown> | undefined) => Promise<R>
