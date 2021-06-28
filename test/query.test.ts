@@ -28,7 +28,7 @@ describe('query', () => {
       'Totte Gott',
     ])
 
-    expect(await store.query(groq`*[_type == "vendor"][].title | order(@ asc) | [3]`)).toEqual(
+    expect(await store.query(groq`*[_type == "vendor"][].title | order(@ asc) [3]`)).toEqual(
       'Freia'
     )
   })
