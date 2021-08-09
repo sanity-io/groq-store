@@ -30,7 +30,7 @@ export function groqStore(config: Config, envImplementations: EnvImplementations
 
   async function query<R = any>(groqQuery: string, params?: Record<string, unknown>): Promise<R> {
     await loadDataset()
-    const tree = parse(groqQuery)
+    const tree = parse(groqQuery, {params})
     const result = await evaluate(tree, {dataset: documents, params})
     return result.get()
   }
