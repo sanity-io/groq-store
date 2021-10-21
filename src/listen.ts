@@ -40,12 +40,13 @@ export function listen(
 
   es.addEventListener(
     'error',
-    () => {
+    (err) => {
       const origin = typeof window !== 'undefined' && window.location.origin
       const hintSuffix = origin ? `, and that the CORS-origin (${origin}) is allowed` : ''
+      const errorMessage = isErrorLike(err) ? ` (${err.message})` : ''
       handlers.error(
         new Error(
-          `Error establishing listener - check that the project ID and dataset are correct${hintSuffix}`
+          `Error establishing listener - check that the project ID and dataset are correct${hintSuffix}${errorMessage}`
         )
       )
     },
@@ -69,4 +70,8 @@ function getMutationParser(cb: (event: MutationEvent) => void): (msg: any) => vo
 
     cb(data)
   }
+}
+
+function isErrorLike(err: unknown): err is {message: string} {
+  return typeof err === 'object' && err !== null && 'message' in err
 }
