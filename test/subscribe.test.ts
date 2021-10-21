@@ -26,7 +26,7 @@ describeSubscribe('subscribe', () => {
     await deleteFixtureDocs()
 
     store = groqStore({...config, listen: true, overlayDrafts: true})
-    errStore = groqStore({...config, projectId: 'n-o-p-e', listen: true, overlayDrafts: true})
+    errStore = groqStore({...config, dataset: 'n-o-p-e', listen: true, overlayDrafts: true})
   })
 
   afterAll(async () => {
