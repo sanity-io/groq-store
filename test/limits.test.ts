@@ -25,6 +25,8 @@ describe('limits', () => {
     }
 
     expect(error).toBeInstanceOf(Error)
-    expect(error.message).toMatch(/limit/i)
+    if (error instanceof Error) {
+      expect(error.message).toMatch(/limit/i)
+    }
   })
 })

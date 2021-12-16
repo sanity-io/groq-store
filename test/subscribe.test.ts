@@ -22,7 +22,7 @@ describeSubscribe('subscribe', () => {
 
   beforeAll(async () => {
     // Make sure we don't have any old fixtures laying around
-    client = sanityClient({...config, useCdn: false})
+    client = sanityClient({...config, useCdn: false, apiVersion: '2021-06-07'})
     await deleteFixtureDocs()
 
     store = groqStore({...config, listen: true, overlayDrafts: true})
@@ -48,7 +48,7 @@ describeSubscribe('subscribe', () => {
   test('integration: can subscribe', async () => {
     let done: () => void
     let error: (err: Error) => void
-    const waiter = new Promise((resolve, reject) => {
+    const waiter = new Promise<void>((resolve, reject) => {
       done = resolve
       error = reject
     })
