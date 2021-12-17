@@ -48,7 +48,7 @@
     "throttle-debounce": "^3.0.1"
   },
   "devDependencies": {
-    "@sanity/client": "^2.0.9",
+    "@sanity/client": "^2.23.1",
     "@types/eventsource": "^1.1.5",
     "@types/node": "^14.14.6",
     "@types/split2": "^2.1.6",
