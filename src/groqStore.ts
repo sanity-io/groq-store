@@ -2,12 +2,15 @@ import groq from 'groq'
 import deepEqual from 'fast-deep-equal'
 import {throttle} from 'throttle-debounce'
 import {SanityDocument} from '@sanity/types'
-import {parse, evaluate} from 'groq-js'
+import {parse as parseOld, evaluate as evaluateOld} from 'groq-js'
+import {parse as parseNew, evaluate as evaluateNew} from 'groq-js-beta'
 import {Config, EnvImplementations, GroqSubscription, GroqStore, Subscription} from './types'
 import {getSyncingDataset} from './syncingDataset'
 
 export function groqStore(config: Config, envImplementations: EnvImplementations): GroqStore {
   let documents: SanityDocument[] = []
+  const parse = config.useGroqBeta ? parseNew : parseOld
+  const evaluate = config.useGroqBeta ? evaluateNew : evaluateOld
   const executeThrottled = throttle(config.subscriptionThrottleMs || 50, executeAllSubscriptions)
   const activeSubscriptions: GroqSubscription[] = []
 
@@ -31,7 +34,7 @@ export function groqStore(config: Config, envImplementations: EnvImplementations
   async function query<R = any>(groqQuery: string, params?: Record<string, unknown>): Promise<R> {
     await loadDataset()
     const tree = parse(groqQuery, {params})
-    const result = await evaluate(tree, {dataset: documents, params})
+    const result = await evaluate(tree as any, {dataset: documents, params})
     return result.get()
   }
 
