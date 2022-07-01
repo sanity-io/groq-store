@@ -1,14 +1,5 @@
 import {SanityDocument} from '@sanity/types'
-
-export interface Config {
-  projectId: string
-  dataset: string
-  listen?: boolean
-  token?: string
-  documentLimit?: number
-  overlayDrafts?: boolean
-  subscriptionThrottleMs?: number
-}
+import EventSourcePolyfill from 'eventsource'
 
 export interface Subscription {
   unsubscribe: () => Promise<void>
@@ -38,7 +29,7 @@ export interface GroqSubscription {
 }
 
 export interface EnvImplementations {
-  EventSource: typeof EventSource
+  EventSource: typeof EventSource | typeof EventSourcePolyfill
   getDocuments: (options: {
     projectId: string
     dataset: string
@@ -47,6 +38,16 @@ export interface EnvImplementations {
   }) => Promise<SanityDocument[]>
 }
 
+export interface Config {
+  projectId: string
+  dataset: string
+  listen?: boolean
+  token?: string
+  documentLimit?: number
+  overlayDrafts?: boolean
+  subscriptionThrottleMs?: number
+  EventSource?: EnvImplementations['EventSource']
+}
 export interface GroqStore {
   query: <R = any>(groqQuery: string, params?: Record<string, unknown> | undefined) => Promise<R>
   getDocument: (documentId: string) => Promise<SanityDocument | null>
