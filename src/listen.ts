@@ -14,8 +14,6 @@ const addEventSourceListener = (
   listener: EventListener
 ): void => {
   if (isNativeBrowserEventSource(eventSource)) {
-    // eslint-disable-next-line
-    console.log('😱😱😱 isNativeBrowserEventSource 😱😱😱')
     eventSource.addEventListener(type, listener, false)
   }
 
