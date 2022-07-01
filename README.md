@@ -12,7 +12,7 @@ In-memory GROQ store. Streams all available documents from Sanity into an in-mem
 ## Caveats
 
 - Streams _entire_ dataset to memory, so generally not recommended for large datasets
-- Does not work with tokens in browser (currently)
+- Needs custom event source to work with tokens in browser
 
 ## Installation
 
@@ -24,6 +24,7 @@ npm install --save @sanity/groq-store
 
 ```js
 import {groqStore, groq} from '@sanity/groq-store'
+// import SanityEventSource from '@sanity/eventsource'
 
 const store = groqStore({
   projectId: 'abc123',
@@ -37,12 +38,16 @@ const store = groqStore({
   overlayDrafts: true,
 
   // Optional token, if you want to receive drafts, or read data from private datasets
-  // NOTE: Does _not_ work in browsers (yet)
+  // NOTE: Needs custom EventSource to work in browsers
   token: 'someAuthToken',
 
   // Optional limit on number of documents, to prevent using too much memory unexpectedly
   // Throws on the first operation (query, retrieval, subscription) if reaching this limit.
   documentLimit: 10000,
+
+  // Optional EventSource. Necessary to authorize using token in the browser, since
+  // the native window.EventSource does not accept headers.
+  // EventSource: SanityEventSource,
 })
 
 store.query(groq`*[_type == "author"]`).then((docs) => {
