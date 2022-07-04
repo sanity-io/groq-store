@@ -15,10 +15,12 @@ export function getSyncingDataset(
   onNotifyUpdate: (docs: SanityDocument[]) => void,
   {getDocuments, EventSource}: EnvImplementations
 ): Subscription & {loaded: Promise<void>} {
-  const {projectId, dataset, listen: useListener, overlayDrafts, documentLimit} = config
+  const {projectId, dataset, listen: useListener, overlayDrafts, documentLimit, token} = config
 
   if (!useListener) {
-    const loaded = getDocuments({projectId, dataset, documentLimit}).then(onUpdate).then(noop)
+    const loaded = getDocuments({projectId, dataset, documentLimit, token})
+      .then(onUpdate)
+      .then(noop)
     return {unsubscribe: noop, loaded}
   }
 
@@ -55,7 +57,7 @@ export function getSyncingDataset(
   return {unsubscribe: listener.unsubscribe, loaded}
 
   async function onOpen() {
-    const initial = await getDocuments({projectId, dataset, documentLimit})
+    const initial = await getDocuments({projectId, dataset, documentLimit, token})
     documents = applyBufferedMutations(initial, buffer)
     documents.forEach((doc) => indexedDocuments.set(doc._id, doc))
     onUpdate(documents)
