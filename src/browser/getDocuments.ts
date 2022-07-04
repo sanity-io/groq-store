@@ -74,7 +74,9 @@ function getDocumentStream(body: Response['body']): ReadableStream<StreamResult>
         .then(processResult)
         .catch((err) => controller.error(err))
 
-      async function processResult(result: ReadableStreamReadResult<Uint8Array>): Promise<void> {
+      async function processResult(
+        result: ReadableStreamDefaultReadResult<Uint8Array>
+      ): Promise<void> {
         if (result.done) {
           if (cancelled) {
             return

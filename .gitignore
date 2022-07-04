@@ -5,3 +5,5 @@ node_modules
 /example/dist
 /example/.cache
 /coverage
+*.iml
+.idea/
