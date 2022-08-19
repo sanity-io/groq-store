@@ -85,3 +85,12 @@ store.close()
 ## License
 
 MIT © [Sanity.io](https://www.sanity.io/)
+
+## Release new version
+
+Run ["CI & Release" workflow](https://github.com/sanity-io/groq-store/actions).
+Make sure to select the main branch and check "Release new version".
+
+Version will be automatically bumped based on [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) since the last release.
+
+Semantic release will only release on configured branches, so it is safe to run release on any branch.
