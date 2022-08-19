@@ -94,3 +94,6 @@ Make sure to select the main branch and check "Release new version".
 Version will be automatically bumped based on [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) since the last release.
 
 Semantic release will only release on configured branches, so it is safe to run release on any branch.
+
+Note: commits with `chore:` will be ignored. If you want updated dependencies to trigger
+a new version, use `fix(deps):` instead.
