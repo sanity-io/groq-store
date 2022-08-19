@@ -1,13 +1,15 @@
 {
   "name": "@sanity/groq-store",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Stream dataset to memory for in-memory querying",
   "main": "dist/node/groq-store.js",
   "browser": "dist/browser/groq-store.js",
   "module": "dist/browser/groq-store.modern.js",
   "typings": "dist/typings/index.d.ts",
   "sideEffects": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "start": "cd example && npm start",
     "prebuild": "rimraf dist",
