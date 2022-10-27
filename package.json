@@ -43,7 +43,6 @@
     "build:browser": "microbundle -i src/browser/index.ts -o dist/browser -f modern,cjs --tsconfig tsconfig.build.json",
     "build:node": "microbundle -i src/index.ts -o dist/node -f cjs --target=node --tsconfig tsconfig.build.json",
     "lint": "eslint .",
-    "prepare": "husky install && npm run build",
     "prepublishOnly": "npm run lint && npm run build && npm run test ",
     "start": "cd example && npm start",
     "test": "tsdx test"
