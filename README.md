@@ -1,6 +1,6 @@
 # @sanity/groq-store
 
-[![npm version](https://img.shields.io/npm/v/@sanity/groq-store.svg?style=flat-square)](https://www.npmjs.com/package/@sanity/groq-store)[![Build Status](https://img.shields.io/travis/sanity-io/groq-store/master.svg?style=flat-square)](https://travis-ci.org/sanity-io/groq-store)![npm bundle size](https://img.shields.io/bundlephobia/minzip/@sanity/groq-store?style=flat-square)
+[![npm version](https://img.shields.io/npm/v/@sanity/groq-store.svg)](https://www.npmjs.com/package/@sanity/groq-store)[![Build status](https://github.com/sanity-io/groq-store/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/sanity-io/groq-store/actions/workflows/main.yml)![npm bundle size](https://img.shields.io/bundlephobia/minzip/@sanity/groq-store)
 
 In-memory GROQ store. Streams all available documents from Sanity into an in-memory database and allows you to query them there.
 
