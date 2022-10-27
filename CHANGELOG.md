@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2](https://github.com/sanity-io/groq-store/compare/v1.0.1...v1.0.2) (2022-10-27)
+
+### Bug Fixes
+
+- **README:** the min supported Node version is 14 ([0b717b2](https://github.com/sanity-io/groq-store/commit/0b717b232d3f769cf70946a735806eb47eaa378d))
+
 ### [1.0.1](https://github.com/sanity-io/groq-store/compare/v1.0.0...v1.0.1) (2022-10-27)
 
 ### Bug Fixes
