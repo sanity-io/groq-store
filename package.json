@@ -2,44 +2,44 @@
   "name": "@sanity/groq-store",
   "version": "0.4.1",
   "description": "Stream dataset to memory for in-memory querying",
-  "main": "dist/node/groq-store.js",
-  "browser": "dist/browser/groq-store.js",
-  "module": "dist/browser/groq-store.modern.js",
-  "typings": "dist/typings/index.d.ts",
-  "sideEffects": false,
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "start": "cd example && npm start",
-    "prebuild": "rimraf dist",
-    "build": "npm run build:node && npm run build:browser",
-    "build:node": "microbundle -i src/index.ts -o dist/node -f cjs --target=node --tsconfig tsconfig.build.json",
-    "build:browser": "microbundle -i src/browser/index.ts -o dist/browser -f modern,cjs --tsconfig tsconfig.build.json",
-    "test": "tsdx test",
-    "lint": "eslint .",
-    "prepare": "husky install && npm run build",
-    "prepublishOnly": "npm run lint && npm run build && npm run test "
-  },
-  "engines": {
-    "node": ">=14"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/sanity-io/groq-store.git"
-  },
   "keywords": [
     "sanity",
     "memory",
     "query",
     "groq"
   ],
-  "author": "Sanity.io <hello@sanity.io>",
-  "license": "MIT",
+  "homepage": "https://github.com/sanity-io/groq-store#readme",
   "bugs": {
     "url": "https://github.com/sanity-io/groq-store/issues"
   },
-  "homepage": "https://github.com/sanity-io/groq-store#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sanity-io/groq-store.git"
+  },
+  "license": "MIT",
+  "author": "Sanity.io <hello@sanity.io>",
+  "sideEffects": false,
+  "main": "dist/node/groq-store.js",
+  "module": "dist/browser/groq-store.modern.js",
+  "browser": "dist/browser/groq-store.js",
+  "typings": "dist/typings/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "npm run build:node && npm run build:browser",
+    "build:browser": "microbundle -i src/browser/index.ts -o dist/browser -f modern,cjs --tsconfig tsconfig.build.json",
+    "build:node": "microbundle -i src/index.ts -o dist/node -f cjs --target=node --tsconfig tsconfig.build.json",
+    "lint": "eslint .",
+    "prepare": "husky install && npm run build",
+    "prepublishOnly": "npm run lint && npm run build && npm run test ",
+    "start": "cd example && npm start",
+    "test": "tsdx test"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
   "dependencies": {
     "@sanity/types": "^2.0.1",
     "eventsource": "^1.0.7",
@@ -71,12 +71,13 @@
     "lint-staged": "^12.4.1",
     "microbundle": "^0.15.0",
     "prettier": "^2.7.1",
+    "prettier-plugin-packagejson": "^2.3.0",
     "rimraf": "^3.0.2",
     "tsdx": "^0.14.1",
     "tslib": "^2.4.0",
     "typescript": "^4.7.4"
   },
-  "jest": {
-    "testEnvironment": "node"
+  "engines": {
+    "node": ">=14"
   }
 }
