@@ -64,7 +64,7 @@
   "devDependencies": {
     "@commitlint/cli": "^16.1.0",
     "@commitlint/config-conventional": "^15.0.0",
-    "@sanity/client": "^2.23.1",
+    "@sanity/client": "^3.4.1",
     "@sanity/semantic-release-preset": "^2.0.0",
     "@types/eventsource": "^1.1.9",
     "@types/node": "^18.11.7",
