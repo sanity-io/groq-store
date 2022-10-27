@@ -19,8 +19,19 @@
   "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
   "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/typings/index.d.ts",
+      "source": "./src/index.ts",
+      "browser": "./dist/browser/groq-store.modern.mjs",
+      "deno": "./dist/browser/groq-store.modern.mjs",
+      "node": "./dist/node/groq-store.js",
+      "require": "./dist/node/groq-store.js",
+      "default": "./dist/browser/groq-store.modern.mjs"
+    }
+  },
   "main": "dist/node/groq-store.js",
-  "module": "dist/browser/groq-store.modern.js",
+  "module": "dist/browser/groq-store.modern.mjs",
   "browser": "dist/browser/groq-store.js",
   "typings": "dist/typings/index.d.ts",
   "files": [
