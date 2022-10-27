@@ -6,7 +6,7 @@ In-memory GROQ store. Streams all available documents from Sanity into an in-mem
 
 ## Targets
 
-- Node.js >= 10
+- Node.js >= 14
 - Modern browsers (Edge >= 14, Chrome, Safari, Firefox etc)
 
 ## Caveats
@@ -17,7 +17,7 @@ In-memory GROQ store. Streams all available documents from Sanity into an in-mem
 ## Installation
 
 ```bash
-npm install --save @sanity/groq-store
+npm i @sanity/groq-store
 ```
 
 ## Usage
