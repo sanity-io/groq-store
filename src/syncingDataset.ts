@@ -46,7 +46,7 @@ export function getSyncingDataset(
   // we can't wait forever, so an upper threshold of X ms should be counted as "ok to flush"
   let stagedDocs: SanityDocument[] | undefined
   let previousTrx: string | undefined
-  let flushTimeout: number | undefined
+  let flushTimeout: NodeJS.Timer | undefined
 
   const listener = listen(EventSource, config, {
     next: onMutationReceived,

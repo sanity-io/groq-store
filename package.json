@@ -43,7 +43,6 @@
     "build:browser": "microbundle -i src/browser/index.ts -o dist/browser -f modern,cjs --tsconfig tsconfig.build.json",
     "build:node": "microbundle -i src/index.ts -o dist/node -f cjs --target=node --tsconfig tsconfig.build.json",
     "lint": "eslint .",
-    "prepare": "husky install && npm run build",
     "prepublishOnly": "npm run lint && npm run build && npm run test ",
     "start": "cd example && npm start",
     "test": "tsdx test"
@@ -68,7 +67,7 @@
     "@sanity/client": "^2.23.1",
     "@sanity/semantic-release-preset": "^2.0.0",
     "@types/eventsource": "^1.1.9",
-    "@types/node": "^14.14.6",
+    "@types/node": "^18.11.7",
     "@types/split2": "^3.2.1",
     "@types/throttle-debounce": "^5.0.0",
     "@typescript-eslint/eslint-plugin": "^5.30.4",
