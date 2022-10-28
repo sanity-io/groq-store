@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3](https://github.com/sanity-io/groq-store/compare/v1.0.2...v1.0.3) (2022-10-28)
+
+### Bug Fixes
+
+- **deps:** update dependency groq-js to ^1.1.1 ([#25](https://github.com/sanity-io/groq-store/issues/25)) ([9c61b10](https://github.com/sanity-io/groq-store/commit/9c61b10ff1b8b7db3edaa008d6a1bc6dd8b50513))
+
 ## [1.0.2](https://github.com/sanity-io/groq-store/compare/v1.0.1...v1.0.2) (2022-10-27)
 
 ### Bug Fixes
