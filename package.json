@@ -1,6 +1,6 @@
 {
   "name": "@sanity/groq-store",
-  "version": "1.0.4",
+  "version": "1.1.0-add-type-allowlist.1",
   "description": "Stream dataset to memory for in-memory querying",
   "keywords": [
     "sanity",
