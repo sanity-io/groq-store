@@ -31,5 +31,11 @@ describe('query', () => {
     expect(await store.query(groq`*[_type == "vendor"][].title | order(@ asc) [3]`)).toEqual(
       'Freia'
     )
+    expect(await store.query(groq`array::unique(*._type)`)).toEqual([
+      'category',
+      'product',
+      'sanity.imageAsset',
+      'vendor',
+    ])
   })
 })
