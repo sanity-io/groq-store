@@ -8,11 +8,17 @@ export function groqStore(config: Config): GroqStore {
 
   const EventSource = config.EventSource ?? window.EventSource
 
-  if (config.token && EventSource === window.EventSource) {
-    throw new Error(
-      'When`token` option is used, `EventSource` option must also be provided. ' +
-        'EventSource cannot be `window.EventSource`, as it does not support passing a token.'
-    )
+  if (config.token) {
+    if (!config.EventSource) {
+      throw new Error(
+        'When the `token` option is used the `EventSource` option must also be provided.'
+      )
+    }
+    if (config.EventSource === window.EventSource)
+      throw new Error(
+        'When the `token` option is used the `EventSource` option must also be provided. ' +
+          'EventSource cannot be `window.EventSource`, as it does not support passing a token.'
+      )
   }
 
   return groqStoreApi(config, {
