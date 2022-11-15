@@ -9,16 +9,17 @@ export const getDocuments: EnvImplementations['getDocuments'] = function getDocu
   dataset,
   token,
   documentLimit,
-  allowTypes = [],
+  includeTypes = [],
 }: {
   projectId: string
   dataset: string
   token?: string
   documentLimit?: number
-  allowTypes?: string[]
+  includeTypes?: string[]
 }): Promise<SanityDocument[]> {
   const baseUrl = `https://${projectId}.api.sanity.io/v1/data/export/${dataset}`
-  const params = allowTypes.length > 0 ? new URLSearchParams({types: allowTypes?.join(',')}) : ''
+  const params =
+    includeTypes.length > 0 ? new URLSearchParams({types: includeTypes?.join(',')}) : ''
   const url = `${baseUrl}?${params}`
   const headers = token ? {Authorization: `Bearer ${token}`} : undefined
 

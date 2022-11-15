@@ -10,16 +10,17 @@ export const getDocuments: EnvImplementations['getDocuments'] = async function g
   dataset,
   token,
   documentLimit,
-  allowTypes = [],
+  includeTypes = [],
 }: {
   projectId: string
   dataset: string
   token?: string
   documentLimit?: number
-  allowTypes?: string[]
+  includeTypes?: string[]
 }): Promise<SanityDocument[]> {
   const baseUrl = `https://${projectId}.api.sanity.io/v1/data/export/${dataset}`
-  const params = allowTypes.length > 0 ? new URLSearchParams({types: allowTypes?.join(',')}) : ''
+  const params =
+    includeTypes.length > 0 ? new URLSearchParams({types: includeTypes?.join(',')}) : ''
   const url = `${baseUrl}?${params}`
   const headers = token ? {Authorization: `Bearer ${token}`} : undefined
   const response = await fetch(url, {credentials: 'include', headers})
@@ -46,7 +47,9 @@ export const getDocuments: EnvImplementations['getDocuments'] = async function g
 
     if (documentLimit && documents.length > documentLimit) {
       reader.cancel('Reached document limit')
-      throw new Error(`Error streaming dataset: Reached limit of ${documentLimit} documents`)
+      throw new Error(
+        `Error streaming dataset: Reached limit of ${documentLimit} documents. Try using the includeTypes option to reduce the amount of documents, or increase the limit.`
+      )
     }
   } while (!result.done)
 

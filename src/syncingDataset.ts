@@ -22,11 +22,11 @@ export function getSyncingDataset(
     overlayDrafts,
     documentLimit,
     token,
-    allowTypes,
+    includeTypes,
   } = config
 
   if (!useListener) {
-    const loaded = getDocuments({projectId, dataset, documentLimit, token, allowTypes})
+    const loaded = getDocuments({projectId, dataset, documentLimit, token, includeTypes})
       .then(onUpdate)
       .then(noop)
     return {unsubscribe: noop, loaded}
@@ -65,7 +65,7 @@ export function getSyncingDataset(
   return {unsubscribe: listener.unsubscribe, loaded}
 
   async function onOpen() {
-    const initial = await getDocuments({projectId, dataset, documentLimit, token, allowTypes})
+    const initial = await getDocuments({projectId, dataset, documentLimit, token, includeTypes})
     documents = applyBufferedMutations(initial, buffer)
     documents.forEach((doc) => indexedDocuments.set(doc._id, doc))
     onUpdate(documents)

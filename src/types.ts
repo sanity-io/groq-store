@@ -30,25 +30,49 @@ export interface GroqSubscription {
 
 export interface EnvImplementations {
   EventSource: typeof EventSource | typeof EventSourcePolyfill
-  getDocuments: (options: {
-    projectId: string
-    dataset: string
-    token?: string
-    documentLimit?: number
-    allowTypes?: string[]
-  }) => Promise<SanityDocument[]>
+  getDocuments: (
+    options: Pick<Config, 'projectId' | 'dataset' | 'token' | 'documentLimit' | 'includeTypes'>
+  ) => Promise<SanityDocument[]>
 }
 
 export interface Config {
   projectId: string
   dataset: string
+  /**
+   * Keep dataset up to date with remote changes.
+   * @default true
+   */
   listen?: boolean
+  /**
+   * Optional token, if you want to receive drafts, or read data from private datasets
+   * NOTE: Needs custom EventSource to work in browsers
+   */
   token?: string
+  /**
+   * Optional limit on number of documents, to prevent using too much memory unexpectedly
+   * Throws on the first operation (query, retrieval, subscription) if reaching this limit.
+   */
   documentLimit?: number
+  /**
+   * "Replaces" published documents with drafts, if available.
+   * Note that document IDs will not reflect draft status, currently
+   */
   overlayDrafts?: boolean
+  /**
+   * Throttle the event emits to batch updates.
+   * @default 50
+   */
   subscriptionThrottleMs?: number
+  /**
+   * Optional EventSource. Necessary to authorize using token in the browser, since
+   * the native window.EventSource does not accept headers.
+   */
   EventSource?: EnvImplementations['EventSource']
-  allowTypes?: string[]
+  /**
+   * Optional allow list filter for document types. You can use this to limit the amount of documents by declaring the types you want to sync. Note that since you're fetching a subset of your dataset, queries that works against your Content Lake might not work against the local groq-store.
+   * @example ['page', 'product', 'sanity.imageAsset']
+   */
+  includeTypes?: string[]
 }
 export interface GroqStore {
   query: <R = any>(groqQuery: string, params?: Record<string, unknown> | undefined) => Promise<R>

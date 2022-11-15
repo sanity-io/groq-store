@@ -8,7 +8,7 @@ describe('allowList', () => {
   let store: GroqStore
 
   beforeAll(() => {
-    store = groqStore({...config, listen: false, overlayDrafts: true, allowTypes: ['product']})
+    store = groqStore({...config, listen: false, overlayDrafts: true, includeTypes: ['product']})
   })
 
   afterAll(async () => {
