@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0](https://github.com/sanity-io/groq-store/compare/v1.0.4...v1.1.0) (2022-11-15)
+
+### Features
+
+- add support for fetching subset of dataset by type ([#2](https://github.com/sanity-io/groq-store/issues/2)) ([0171a06](https://github.com/sanity-io/groq-store/commit/0171a0668ad89a0d9e4098e11bbf84d7b9b93633))
+
 ## [1.1.0-add-type-allowlist.1](https://github.com/sanity-io/groq-store/compare/v1.0.4...v1.1.0-add-type-allowlist.1) (2022-11-14)
 
 ### Features
