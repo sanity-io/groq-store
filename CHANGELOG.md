@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/sanity-io/groq-store/compare/v1.1.0...v1.1.1) (2022-11-15)
+
+### Bug Fixes
+
+- improve error messages for invalid `token` and `EventSource` configs ([51aeb75](https://github.com/sanity-io/groq-store/commit/51aeb75394a3eb28287ede69f944aefc0ce86a95))
+
 ## [1.1.0](https://github.com/sanity-io/groq-store/compare/v1.0.4...v1.1.0) (2022-11-15)
 
 ### Features
