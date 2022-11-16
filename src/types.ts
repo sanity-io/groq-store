@@ -40,7 +40,7 @@ export interface Config {
   dataset: string
   /**
    * Keep dataset up to date with remote changes.
-   * @default true
+   * @defaultValue true
    */
   listen?: boolean
   /**
@@ -60,7 +60,7 @@ export interface Config {
   overlayDrafts?: boolean
   /**
    * Throttle the event emits to batch updates.
-   * @default 50
+   * @defaultValue 50
    */
   subscriptionThrottleMs?: number
   /**
