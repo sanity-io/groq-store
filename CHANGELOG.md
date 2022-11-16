@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file. See
 
 ### Bug Fixes
 
-- use tsdoc `[@default](https://github.com/default)Value` ([5c207d5](https://github.com/sanity-io/groq-store/commit/5c207d5bf7ddbf65b5f58575b4363b3b8b7baee5))
+- use tsdoc `@defaultValue` ([5c207d5](https://github.com/sanity-io/groq-store/commit/5c207d5bf7ddbf65b5f58575b4363b3b8b7baee5))
 
 ## [1.1.1](https://github.com/sanity-io/groq-store/compare/v1.1.0...v1.1.1) (2022-11-15)
 
