@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.4](https://github.com/sanity-io/groq-store/compare/v1.1.3...v1.1.4) (2022-11-18)
+
+### Bug Fixes
+
+- support `swcMinify` in NextJS 13 ([f3063a4](https://github.com/sanity-io/groq-store/commit/f3063a423ca91697118ff6b8a16cbce0fe678869))
+
 ## [1.1.3](https://github.com/sanity-io/groq-store/compare/v1.1.2...v1.1.3) (2022-11-16)
 
 ### Bug Fixes
