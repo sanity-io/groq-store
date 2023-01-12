@@ -65,7 +65,7 @@
     "@commitlint/cli": "^17.4.1",
     "@commitlint/config-conventional": "^17.4.0",
     "@sanity/client": "^4.0.1",
-    "@sanity/semantic-release-preset": "^2.0.5",
+    "@sanity/semantic-release-preset": "^3.0.2",
     "@types/eventsource": "^1.1.10",
     "@types/node": "^18.11.18",
     "@types/split2": "^3.2.1",
