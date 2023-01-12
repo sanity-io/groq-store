@@ -1,5 +1,4 @@
 import {SanityDocument} from '@sanity/types'
-import type {ReadableStreamDefaultReadResult} from 'stream/web'
 import {EnvImplementations} from '../types'
 
 type StreamError = {error: {description?: string; type: string}}
@@ -82,9 +81,7 @@ function getDocumentStream(body: Response['body']): ReadableStream<StreamResult>
         .then(processResult)
         .catch((err) => controller.error(err))
 
-      async function processResult(
-        result: ReadableStreamDefaultReadResult<Uint8Array>
-      ): Promise<void> {
+      async function processResult(result: ReadableStreamReadResult<Uint8Array>): Promise<void> {
         if (result.done) {
           if (cancelled) {
             return

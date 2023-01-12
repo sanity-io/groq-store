@@ -7,6 +7,7 @@ import {Config, GroqStore} from './types'
 import {getDocuments} from './node/getDocuments'
 import {assertEnvSupport} from './node/support'
 
+/** @public */
 export function groqStore(config: Config): GroqStore {
   assertEnvSupport()
 
@@ -17,4 +18,4 @@ export function groqStore(config: Config): GroqStore {
 }
 
 export {default as groq} from 'groq'
-export {Subscription, GroqStore, Config} from './types'
+export type {Subscription, GroqStore, Config, EnvImplementations} from './types'

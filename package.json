@@ -19,34 +19,52 @@
   "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
   "sideEffects": false,
+  "type": "commonjs",
   "exports": {
     ".": {
-      "types": "./dist/typings/index.d.ts",
+      "types": "./dist/index.d.ts",
+      "browser": {
+        "source": "./src/browser/index.ts",
+        "require": "./dist/index.browser.js",
+        "import": "./dist/index.browser.mjs"
+      },
+      "deno": "./dist/index.browser.mjs",
+      "worker": "./dist/index.browser.mjs",
       "source": "./src/index.ts",
-      "browser": "./dist/browser/groq-store.modern.mjs",
-      "deno": "./dist/browser/groq-store.modern.mjs",
-      "node": "./dist/node/groq-store.js",
-      "require": "./dist/node/groq-store.js",
-      "default": "./dist/browser/groq-store.modern.mjs"
-    }
+      "require": "./dist/index.js",
+      "node": {
+        "import": "./dist/index.cjs.mjs",
+        "require": "./dist/index.js"
+      },
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
   },
-  "main": "dist/node/groq-store.js",
-  "module": "dist/browser/groq-store.modern.mjs",
-  "browser": "dist/browser/groq-store.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "source": "./src/index.ts",
+  "browser": {
+    "./dist/index.js": "./dist/index.browser.js",
+    "./dist/index.mjs": "./dist/index.browser.mjs"
+  },
   "typings": "dist/typings/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "npm run build:node && npm run build:browser",
-    "build:browser": "microbundle -i src/browser/index.ts -o dist/browser -f modern,cjs --tsconfig tsconfig.build.json",
-    "build:node": "microbundle -i src/index.ts -o dist/node -f cjs --target=node --tsconfig tsconfig.build.json",
+    "build": "pkg build --strict && pkg --strict",
     "lint": "eslint .",
-    "prepublishOnly": "npm run lint && npm run build && npm run test ",
+    "prepublishOnly": "npm run build",
     "start": "cd example && npm start",
     "test": "tsdx test"
   },
+  "browserslist": [
+    "> 0.2% and supports es6-module and supports es6-module-dynamic-import and not dead and not IE 11",
+    "maintained node versions"
+  ],
   "jest": {
     "testEnvironment": "node"
   },
@@ -65,6 +83,7 @@
     "@commitlint/cli": "^17.4.1",
     "@commitlint/config-conventional": "^17.4.0",
     "@sanity/client": "^4.0.1",
+    "@sanity/pkg-utils": "^2.1.1",
     "@sanity/semantic-release-preset": "^3.0.2",
     "@types/eventsource": "^1.1.10",
     "@types/node": "^18.11.18",
@@ -80,13 +99,12 @@
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
     "ls-engines": "^0.8.0",
-    "microbundle": "^0.15.1",
     "prettier": "^2.8.2",
     "prettier-plugin-packagejson": "^2.3.0",
     "rimraf": "^3.0.2",
     "tsdx": "^0.14.1",
     "tslib": "^2.4.1",
-    "typescript": "4.8.3"
+    "typescript": "4.9.4"
   },
   "engines": {
     "node": ">=14"

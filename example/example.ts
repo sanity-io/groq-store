@@ -12,7 +12,7 @@ import {groqStore, Subscription} from '../src/browser'
   attach()
   populate()
 
-  let subscription: Subscription | undefined
+  let subscription: Subscription | null | undefined
   const dataset = groqStore({
     projectId: 'groqstore',
     dataset: 'fixture',
@@ -40,7 +40,7 @@ import {groqStore, Subscription} from '../src/browser'
     localStorage.setItem('groqStore', queryEl.value)
     try {
       onResult(await dataset.query(queryEl.value))
-    } catch (err) {
+    } catch (err: any) {
       onError(err.message || 'Unknown error')
     }
   }
