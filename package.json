@@ -80,8 +80,8 @@
     "throttle-debounce": "^5.0.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.4.1",
-    "@commitlint/config-conventional": "^17.4.0",
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
     "@sanity/client": "^4.0.1",
     "@sanity/pkg-utils": "^2.1.1",
     "@sanity/semantic-release-preset": "^3.0.2",
