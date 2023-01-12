@@ -1,6 +1,9 @@
 # @sanity/groq-store
 
-[![npm version](https://img.shields.io/npm/v/@sanity/groq-store.svg)](https://www.npmjs.com/package/@sanity/groq-store)[![Build status](https://github.com/sanity-io/groq-store/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/sanity-io/groq-store/actions/workflows/main.yml)![npm bundle size](https://img.shields.io/bundlephobia/minzip/@sanity/groq-store)
+[![npm stat](https://img.shields.io/npm/dm/@sanity/groq-store.svg?style=flat-square)](https://npm-stat.com/charts.html?package=@sanity/groq-store)
+[![npm version](https://img.shields.io/npm/v/@sanity/groq-store.svg?style=flat-square)](https://www.npmjs.com/package/@sanity/groq-store)
+[![gzip size][gzip-badge]][bundlephobia]
+[![size][size-badge]][bundlephobia]
 
 In-memory GROQ store. Streams all available documents from Sanity into an in-memory database and allows you to query them there.
 
@@ -100,3 +103,7 @@ Semantic release will only release on configured branches, so it is safe to run 
 
 Note: commits with `chore:` will be ignored. If you want updated dependencies to trigger
 a new version, use `fix(deps):` instead.
+
+[gzip-badge]: https://img.shields.io/bundlephobia/minzip/@sanity/groq-store?label=gzip%20size&style=flat-square
+[size-badge]: https://img.shields.io/bundlephobia/min/@sanity/groq-store?label=size&style=flat-square
+[bundlephobia]: https://bundlephobia.com/package/@sanity/groq-store
