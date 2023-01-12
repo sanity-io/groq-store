@@ -48,7 +48,7 @@
     "./dist/index.js": "./dist/index.browser.js",
     "./dist/index.mjs": "./dist/index.browser.mjs"
   },
-  "typings": "dist/typings/index.d.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "src"
