@@ -5,6 +5,22 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.0](https://github.com/sanity-io/groq-store/compare/v1.1.5...v2.0.0) (2023-01-12)
+
+### ⚠ BREAKING CHANGES
+
+- no longer shipping ES5 syntax, the new compile target
+  is browsers capable of running ESM natively. The Node.js baseline is
+  still v14.
+
+### Features
+
+- add 100% ESM support ([e2bb872](https://github.com/sanity-io/groq-store/commit/e2bb872b9e056d2d1aa1a2e1c604f4b74a49d3bd))
+
+### Bug Fixes
+
+- only specify the major version for dependencies that should dedupe well ([e970b07](https://github.com/sanity-io/groq-store/commit/e970b079af4eab8a35dec25d8de311dd228a79a9))
+
 ## [1.1.5](https://github.com/sanity-io/groq-store/compare/v1.1.4...v1.1.5) (2023-01-12)
 
 ### Bug Fixes
