@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5](https://github.com/sanity-io/groq-store/compare/v1.1.4...v1.1.5) (2023-01-12)
+
+### Bug Fixes
+
+- **deps:** update sanity monorepo to v3 (major) ([#36](https://github.com/sanity-io/groq-store/issues/36)) ([4b3f284](https://github.com/sanity-io/groq-store/commit/4b3f2842c7661085bd54d1d66d47382c6a172f5f))
+
 ## [1.1.4](https://github.com/sanity-io/groq-store/compare/v1.1.3...v1.1.4) (2022-11-18)
 
 ### Bug Fixes
