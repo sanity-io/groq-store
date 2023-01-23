@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.5](https://github.com/sanity-io/groq-store/compare/v2.0.4...v2.0.5) (2023-01-23)
+
+### Bug Fixes
+
+- **deps:** update dependency @sanity/semantic-release-preset to v4 ([#54](https://github.com/sanity-io/groq-store/issues/54)) ([b218e3f](https://github.com/sanity-io/groq-store/commit/b218e3f35b0e89a1820fa64898a0355d9c8aaeaf))
+
 ## [2.0.4](https://github.com/sanity-io/groq-store/compare/v2.0.3...v2.0.4) (2023-01-14)
 
 ### Bug Fixes
