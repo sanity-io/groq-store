@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.7](https://github.com/sanity-io/groq-store/compare/v2.0.6...v2.0.7) (2023-02-14)
+
+### Bug Fixes
+
+- bump `groq-js` to `1.1.7` ([57ea046](https://github.com/sanity-io/groq-store/commit/57ea046ed323129f7eaf3fb7ed8c2c6283e4c3ab))
+
 ## [2.0.6](https://github.com/sanity-io/groq-store/compare/v2.0.5...v2.0.6) (2023-02-01)
 
 ### Bug Fixes
