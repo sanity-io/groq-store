@@ -21,6 +21,7 @@ import {groqStore, Subscription} from '../src/browser'
   })
 
   store.on('datasetLoaded', ({dataset, documents}) => {
+    // eslint-disable-next-line no-console
     console.info(`Dataset "${dataset}" loaded with ${documents.length} documents`)
   })
 

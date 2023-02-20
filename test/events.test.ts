@@ -51,10 +51,7 @@ describe('events', () => {
       }
     })
 
-    const getDocuments = jest.fn().mockResolvedValue([
-      {_id: 'foo', value: 'bar'},
-      // {_id: 'bar', value: 'foo'},
-    ])
+    const getDocuments = jest.fn().mockResolvedValue([{_id: 'foo', value: 'bar'}])
     const datasetChangedCb = jest.fn()
 
     const store = groqStoreApi(config, {

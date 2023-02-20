@@ -3,7 +3,7 @@ import {SanityDocument} from '@sanity/types'
 
 type Events = {
   /**
-   * Emitted after the dataset was loaded
+   * Emitted after the dataset was loaded.
    */
   datasetLoaded: {
     dataset: string
@@ -11,8 +11,8 @@ type Events = {
   }
 
   /**
-   * Emitted each time when the dataset changes. This happens when the dataset
-   * is initialised, and after mutations were applied through listeners.
+   * Emitted each time the dataset changes. This happens when the dataset
+   * is initialised, and after mutations are applied through listeners.
    */
   datasetChanged: {
     dataset: string
