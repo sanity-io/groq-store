@@ -1,7 +1,8 @@
 import {EventEmitter} from 'events'
 import {SanityDocument} from '@sanity/types'
 
-type Events = {
+/** @public */
+export type Events = {
   /**
    * Emitted after the dataset was loaded.
    */
@@ -20,6 +21,7 @@ type Events = {
   }
 }
 
+/** @public */
 export interface TypedEventEmitter extends EventEmitter {
   on<K extends keyof Events>(s: K, listener: (v: Events[K]) => void): this
   emit<K extends keyof Events>(eventName: K, params: Events[K]): boolean
