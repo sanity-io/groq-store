@@ -82,7 +82,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
-    "@sanity/client": "^4.0.1",
+    "@sanity/client": "^5.2.2",
     "@sanity/pkg-utils": "^2.2.5",
     "@sanity/semantic-release-preset": "^4.0.0",
     "@types/eventsource": "^1.1.11",
