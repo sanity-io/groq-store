@@ -25,6 +25,21 @@ export function getSyncingDataset(
     includeTypes,
   } = config
 
+  // We don't want to flush updates while we're in the same transaction, so a normal
+  // throttle/debounce wouldn't do it. We need to wait and see if the next mutation is
+  // within the same transaction as the previous, and if not we can flush. Of course,
+  // we can't wait forever, so an upper threshold of X ms should be counted as "ok to flush"
+  let stagedDocs: SanityDocument[] | undefined
+  let previousTrx: string | undefined
+  let flushTimeout: NodeJS.Timer | undefined
+
+  const onUpdate = (docs: SanityDocument[]) => {
+    stagedDocs = undefined
+    flushTimeout = undefined
+    previousTrx = undefined
+    onNotifyUpdate(overlayDrafts ? overlay(docs) : docs)
+  }
+
   if (!useListener) {
     const loaded = getDocuments({projectId, dataset, documentLimit, token, includeTypes})
       .then(onUpdate)
@@ -48,23 +63,7 @@ export function getSyncingDataset(
     onLoadError = reject
   })
 
-  // We don't want to flush updates while we're in the same transaction, so a normal
-  // throttle/debounce wouldn't do it. We need to wait and see if the next mutation is
-  // within the same transaction as the previous, and if not we can flush. Of course,
-  // we can't wait forever, so an upper threshold of X ms should be counted as "ok to flush"
-  let stagedDocs: SanityDocument[] | undefined
-  let previousTrx: string | undefined
-  let flushTimeout: NodeJS.Timer | undefined
-
-  const listener = listen(EventSource, config, {
-    next: onMutationReceived,
-    open: onOpen,
-    error: (error: Error) => onLoadError(error),
-  })
-
-  return {unsubscribe: listener.unsubscribe, loaded}
-
-  async function onOpen() {
+  const onOpen = async () => {
     const initial = await getDocuments({projectId, dataset, documentLimit, token, includeTypes})
     documents = applyBufferedMutations(initial, buffer)
     documents.forEach((doc) => indexedDocuments.set(doc._id, doc))
@@ -72,7 +71,7 @@ export function getSyncingDataset(
     onDoneLoading()
   }
 
-  function onMutationReceived(msg: MutationEvent) {
+  const onMutationReceived = (msg: MutationEvent) => {
     if (documents) {
       applyMutation(msg)
       scheduleUpdate(documents, msg)
@@ -81,7 +80,13 @@ export function getSyncingDataset(
     }
   }
 
-  function scheduleUpdate(docs: SanityDocument[], msg: MutationEvent) {
+  const listener = listen(EventSource, config, {
+    next: onMutationReceived,
+    open: onOpen,
+    error: (error: Error) => onLoadError(error),
+  })
+
+  const scheduleUpdate = (docs: SanityDocument[], msg: MutationEvent) => {
     clearTimeout(flushTimeout)
 
     if (previousTrx !== msg.transactionId && stagedDocs) {
@@ -97,14 +102,7 @@ export function getSyncingDataset(
     flushTimeout = setTimeout(onUpdate, DEBOUNCE_MS, docs.slice())
   }
 
-  function onUpdate(docs: SanityDocument[]) {
-    stagedDocs = undefined
-    flushTimeout = undefined
-    previousTrx = undefined
-    onNotifyUpdate(overlayDrafts ? overlay(docs) : docs)
-  }
-
-  function applyMutation(msg: MutationEvent) {
+  const applyMutation = (msg: MutationEvent) => {
     if (!msg.effects || msg.documentId.startsWith('_.')) {
       return
     }
@@ -113,7 +111,7 @@ export function getSyncingDataset(
     replaceDocument(msg.documentId, applyPatchWithoutRev(document, msg.effects.apply))
   }
 
-  function replaceDocument(id: string, document: SanityDocument | null) {
+  const replaceDocument = (id: string, document: SanityDocument | null) => {
     const current = indexedDocuments.get(id)
     const docs = documents || []
     const position = current ? docs.indexOf(current) : -1
@@ -132,6 +130,8 @@ export function getSyncingDataset(
       indexedDocuments.delete(id)
     }
   }
+
+  return {unsubscribe: listener.unsubscribe, loaded}
 }
 
 function applyBufferedMutations(

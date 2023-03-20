@@ -59,15 +59,12 @@
     "lint": "eslint .",
     "prepublishOnly": "npm run build",
     "start": "cd example && npm start",
-    "test": "tsdx test"
+    "test": "vitest"
   },
   "browserslist": [
     "> 0.2% and supports es6-module and supports es6-module-dynamic-import and not dead and not IE 11",
     "maintained node versions"
   ],
-  "jest": {
-    "testEnvironment": "node"
-  },
   "dependencies": {
     "@sanity/types": "3",
     "eventsource": "2",
@@ -83,7 +80,7 @@
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
     "@sanity/client": "^5.2.2",
-    "@sanity/pkg-utils": "^2.2.8",
+    "@sanity/pkg-utils": "^2.2.10",
     "@sanity/semantic-release-preset": "^4.0.0",
     "@types/eventsource": "^1.1.11",
     "@types/node": "^18.14.6",
@@ -91,6 +88,7 @@
     "@types/throttle-debounce": "^5.0.0",
     "@typescript-eslint/eslint-plugin": "^5.54.0",
     "@typescript-eslint/parser": "^5.54.0",
+    "@vitest/coverage-c8": "^0.29.3",
     "eslint": "^8.35.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-config-sanity": "^6.0.0",
@@ -102,10 +100,9 @@
     "prettier": "^2.8.4",
     "prettier-plugin-packagejson": "^2.4.3",
     "rimraf": "^4.3.0",
-    "rollup": "^3",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.5.0",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "vitest": "^0.29.3",
+    "vitest-github-actions-reporter": "^0.10.0"
   },
   "engines": {
     "node": ">=14.18"
