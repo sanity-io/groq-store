@@ -120,7 +120,7 @@ describe.runIf(config.token)(
                 ...initial,
                 slug: 'fox',
                 title: 'Fox 2-bit',
-                categories: ['Awsome'],
+                categories: ['Awesome category being awesome'],
               })
 
               // Fix a typo in the category, ensuring updates to referenced documents are working
