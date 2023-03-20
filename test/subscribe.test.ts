@@ -105,7 +105,11 @@ describe.runIf(config.token)(
               // as well as the query resolving the reference correctly
               await client
                 .transaction()
-                .createOrReplace({_id: 'category-awesome', _type: 'category', title: 'Awsome'})
+                .createOrReplace({
+                  _id: 'category-awesome',
+                  _type: 'category',
+                  title: 'Awesome category being awesome',
+                })
                 .patch('drafts.fox', (p) => p.set({categories: [{_ref: 'category-awesome'}]}))
                 .commit({visibility: 'async'})
                 .catch(error)
