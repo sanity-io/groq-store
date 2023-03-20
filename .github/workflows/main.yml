@@ -77,8 +77,11 @@ jobs:
           cache: npm
       - run: npm install
       - run: npm test -- --coverage
+        if: matrix.os == 'ubuntu-latest' && matrix.node == 'lts/*'
         env:
           GROQ_STORE_TEST_TOKEN: ${{ secrets.GROQ_STORE_TEST_TOKEN }}
+      - run: npm test
+        if: matrix.os != 'ubuntu-latest' || matrix.node != 'lts/*'
 
   release:
     name: Semantic release
