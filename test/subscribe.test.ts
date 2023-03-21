@@ -11,17 +11,26 @@ describe.runIf(config.token)(
     let errStore: GroqStore
 
     function deleteFixtureDocs() {
-      return client
-        .transaction()
-        .delete('fox')
-        .delete('drafts.fox')
-        .delete('category-awesome')
-        .commit({visibility: 'async'})
+      return (
+        client
+          .transaction()
+          .delete('fox')
+          .delete('drafts.fox')
+          .delete('category-awesome')
+          // Not expecting to see this draft, but in case someone messes up the dataset
+          .delete('drafts.category-awesome')
+          .commit({visibility: 'async'})
+      )
     }
 
     beforeAll(async () => {
       // Make sure we don't have any old fixtures laying around
-      client = createClient({...config, useCdn: false, apiVersion: '2021-06-07'})
+      client = createClient({
+        ...config,
+        useCdn: false,
+        apiVersion: '2021-06-07',
+        requestTagPrefix: 'sanity.groq-store.integration-test',
+      })
       await deleteFixtureDocs()
 
       store = groqStore({...config, listen: true, overlayDrafts: true})
