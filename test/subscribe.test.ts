@@ -35,6 +35,7 @@ describe.runIf(config.token)(
     })
 
     test('integration: callback gets error on listener failure', async () => {
+      expect.hasAssertions()
       await new Promise((resolve) => {
         errStore.subscribe('*[0]', {}, (err, result) => {
           expect(err).toBeDefined()
@@ -47,6 +48,7 @@ describe.runIf(config.token)(
     })
 
     test('integration: can subscribe', async () => {
+      expect.hasAssertions()
       let done: () => void
       let error: (err: Error) => void
       const waiter = new Promise<void>((resolve, reject) => {
