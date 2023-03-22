@@ -4,11 +4,11 @@
   "private": true,
   "description": "",
   "license": "MIT",
-  "main": "src/example.ts",
   "scripts": {
     "start": "parcel index.html"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.5"
-  }
+  },
+  "default": "example.ts"
 }

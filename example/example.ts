@@ -13,11 +13,16 @@ import {groqStore, Subscription} from '../src/browser'
   populate()
 
   let subscription: Subscription | null | undefined
-  const dataset = groqStore({
+  const store = groqStore({
     projectId: 'groqstore',
     dataset: 'fixture',
     listen: true,
     overlayDrafts: true,
+  })
+
+  store.on('datasetLoaded', ({dataset, documents}) => {
+    // eslint-disable-next-line no-console
+    console.info(`Dataset "${dataset}" loaded with ${documents.length} documents`)
   })
 
   function attach() {
@@ -39,7 +44,7 @@ import {groqStore, Subscription} from '../src/browser'
     resultEl.value = '… querying …'
     localStorage.setItem('groqStore', queryEl.value)
     try {
-      onResult(await dataset.query(queryEl.value))
+      onResult(await store.query(queryEl.value))
     } catch (err: any) {
       onError(err.message || 'Unknown error')
     }
@@ -56,7 +61,7 @@ import {groqStore, Subscription} from '../src/browser'
       resultEl.value = '… querying …'
       executeBtnEl.disabled = true
       subscribeBtnEl.textContent = 'Unsubscribe'
-      subscription = dataset.subscribe(queryEl.value, {}, onResult)
+      subscription = store.subscribe(queryEl.value, {}, onResult)
     }
   }
 

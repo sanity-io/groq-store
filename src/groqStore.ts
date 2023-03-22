@@ -5,8 +5,11 @@ import {SanityDocument} from '@sanity/types'
 import {parse, evaluate} from 'groq-js'
 import {Config, EnvImplementations, GroqSubscription, GroqStore, Subscription} from './types'
 import {getSyncingDataset} from './syncingDataset'
+import {EventEmitter} from 'events'
+import {TypedEventEmitter} from './events'
 
 export function groqStore(config: Config, envImplementations: EnvImplementations): GroqStore {
+  const eventEmitter = new EventEmitter() as TypedEventEmitter
   let documents: SanityDocument[] = []
   const executeThrottled = throttle(config.subscriptionThrottleMs || 50, executeAllSubscriptions)
   const activeSubscriptions: GroqSubscription[] = []
@@ -20,9 +23,20 @@ export function groqStore(config: Config, envImplementations: EnvImplementations
         (docs) => {
           documents = docs
           executeThrottled()
+          eventEmitter.emit('datasetChanged', {
+            dataset: config.dataset,
+            documents: docs,
+          })
         },
         envImplementations
       )
+
+      dataset.loaded.then(() => {
+        eventEmitter.emit('datasetLoaded', {
+          dataset: config.dataset,
+          documents,
+        })
+      })
     }
 
     await dataset.loaded
@@ -97,8 +111,16 @@ export function groqStore(config: Config, envImplementations: EnvImplementations
 
   function close() {
     executeThrottled.cancel()
+    eventEmitter.removeAllListeners()
     return dataset ? dataset.unsubscribe() : Promise.resolve()
   }
 
-  return {query, getDocument, getDocuments, subscribe, close}
+  return {
+    query,
+    getDocument,
+    getDocuments,
+    subscribe,
+    close,
+    on: (...args) => eventEmitter.on(...args),
+  }
 }

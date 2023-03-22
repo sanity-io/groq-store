@@ -19,3 +19,4 @@ export function groqStore(config: Config): GroqStore {
 
 export {default as groq} from 'groq'
 export type {Subscription, GroqStore, Config, EnvImplementations} from './types'
+export type {Events, TypedEventEmitter} from './events'

@@ -1,5 +1,6 @@
 import {SanityDocument} from '@sanity/types'
 import EventSourcePolyfill from 'eventsource'
+import {TypedEventEmitter} from './events'
 
 /** @public */
 export interface Subscription {
@@ -89,6 +90,7 @@ export interface GroqStore {
     callback: (err: Error | undefined, result?: R) => void
   ) => Subscription
   close: () => Promise<void>
+  on: TypedEventEmitter['on']
 }
 
 export interface ApiError {
