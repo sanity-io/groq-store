@@ -1,6 +1,20 @@
 import {Subscription, MutationEvent, Config, ApiError, EnvImplementations} from './types'
+import type BrowserEventSource from '@sanity/eventsource/browser'
+import type NodeEventSource from '@sanity/eventsource/node'
 
 type EventSourceInstance = InstanceType<EnvImplementations['EventSource']>
+
+// The events used by Content Lake: https://www.sanity.io/docs/listening
+export interface SharedEventSourceEventMap {
+  welcome: MessageEvent
+  mutation: MessageEvent
+  channelError: MessageEvent
+  disconnect: MessageEvent
+  error: Event
+}
+declare module 'event-source-polyfill' {
+  export interface EventSourceEventMap extends SharedEventSourceEventMap {}
+}
 
 const isNativeBrowserEventSource = (
   eventSource: EventSourceInstance
@@ -8,17 +22,22 @@ const isNativeBrowserEventSource = (
   typeof window !== 'undefined' &&
   eventSource.addEventListener === window.EventSource.prototype.addEventListener
 
+const isPolyfillEventSource = (
+  eventSource: EventSourceInstance
+): eventSource is InstanceType<typeof BrowserEventSource | typeof NodeEventSource> =>
+  !isNativeBrowserEventSource(eventSource)
+
 const addEventSourceListener = (
   eventSource: EventSourceInstance,
-  type: string,
+  type: keyof SharedEventSourceEventMap,
   listener: EventListener
 ): void => {
-  if (isNativeBrowserEventSource(eventSource)) {
+  if (isPolyfillEventSource(eventSource)) {
+    // Polyfilled event source does not accept option parameter
+    eventSource.addEventListener(type, listener as any)
+  } else {
     eventSource.addEventListener(type, listener, false)
   }
-
-  // Polyfilled event source does not accept option parameter
-  eventSource.addEventListener(type, listener)
 }
 
 export function listen(

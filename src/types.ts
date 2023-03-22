@@ -1,5 +1,6 @@
-import {SanityDocument} from '@sanity/types'
-import EventSourcePolyfill from 'eventsource'
+import type {SanityDocument} from '@sanity/types'
+import type BrowserEventSource from '@sanity/eventsource/browser'
+import type NodeEventSource from '@sanity/eventsource/node'
 
 /** @public */
 export interface Subscription {
@@ -31,7 +32,7 @@ export interface GroqSubscription {
 
 /** @public */
 export interface EnvImplementations {
-  EventSource: typeof EventSource | typeof EventSourcePolyfill
+  EventSource: typeof NodeEventSource | typeof BrowserEventSource | typeof window.EventSource
   getDocuments: (
     options: Pick<Config, 'projectId' | 'dataset' | 'token' | 'documentLimit' | 'includeTypes'>
   ) => Promise<SanityDocument[]>

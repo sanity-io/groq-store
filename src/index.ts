@@ -1,7 +1,7 @@
 /**
  * Note: Entry point for _browser_ build is in browser/index.ts
  */
-import EventSourcePolyfill from 'eventsource'
+import EventSourcePolyfill from '@sanity/eventsource/node'
 import {groqStore as groqStoreApi} from './groqStore'
 import {Config, GroqStore} from './types'
 import {getDocuments} from './node/getDocuments'

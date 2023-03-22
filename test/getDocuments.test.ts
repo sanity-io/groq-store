@@ -1,6 +1,6 @@
-import EventSource from 'eventsource'
+import EventSource from '@sanity/eventsource'
 import {groqStore as groqStoreApi} from '../src/groqStore'
-import {EnvImplementations, Config} from '../src/types'
+import {Config} from '../src/types'
 import * as baseConfig from './config'
 import {describe, it, vi, expect} from 'vitest'
 
@@ -14,7 +14,7 @@ describe('getDocuments', () => {
     const getDocuments = vi.fn().mockResolvedValue([])
 
     const store = groqStoreApi(config, {
-      EventSource: EventSource as any as EnvImplementations['EventSource'],
+      EventSource,
       getDocuments,
     })
 
