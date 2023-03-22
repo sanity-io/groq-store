@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.0](https://github.com/sanity-io/groq-store/compare/v2.0.9...v2.1.0) (2023-03-22)
+
+### Features
+
+- use `@sanity/eventsource` instead of `eventsource` ([7656c97](https://github.com/sanity-io/groq-store/commit/7656c974a1f79f5772cb848612e86664071fdef3))
+
 ## [2.0.9](https://github.com/sanity-io/groq-store/compare/v2.0.8...v2.0.9) (2023-03-22)
 
 ### Bug Fixes
