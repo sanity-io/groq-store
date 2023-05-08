@@ -44,7 +44,7 @@ export interface Config {
   dataset: string
   /**
    * Keep dataset up to date with remote changes.
-   * @defaultValue true
+   * @defaultValue false
    */
   listen?: boolean
   /**
