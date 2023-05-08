@@ -53,6 +53,7 @@ const store = groqStore({
   // EventSource: SanityEventSource,
 
   // Optional allow list filter for document types. You can use this to limit the amount of documents by declaring the types you want to sync. Note that since you're fetching a subset of your dataset, queries that works against your Content Lake might not work against the local groq-store.
+  // You can quickly list all your types using this query: `array::unique(*[]._type)`
   includeTypes: ['post', 'page', 'product', 'sanity.imageAsset'],
 })
 
