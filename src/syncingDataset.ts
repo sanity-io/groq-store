@@ -18,9 +18,9 @@ export function getSyncingDataset(
   const {
     projectId,
     dataset,
-    listen: useListener,
-    overlayDrafts,
-    documentLimit,
+    listen: useListener = true,
+    overlayDrafts = true,
+    documentLimit = 3000,
     token,
     includeTypes,
   } = config

@@ -44,7 +44,7 @@ export interface Config {
   dataset: string
   /**
    * Keep dataset up to date with remote changes.
-   * @defaultValue false
+   * @defaultValue true
    */
   listen?: boolean
   /**
@@ -55,11 +55,13 @@ export interface Config {
   /**
    * Optional limit on number of documents, to prevent using too much memory unexpectedly
    * Throws on the first operation (query, retrieval, subscription) if reaching this limit.
+   * @defaultValue 3000
    */
   documentLimit?: number
   /**
    * "Replaces" published documents with drafts, if available.
    * Note that document IDs will not reflect draft status, currently
+   * @defaultValue true
    */
   overlayDrafts?: boolean
   /**
