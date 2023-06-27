@@ -3,6 +3,7 @@ import {listen} from './listen'
 import {getPublishedId} from './drafts'
 import {applyPatchWithoutRev} from './patch'
 import {Config, EnvImplementations, MutationEvent, Subscription} from './types'
+import {compareString} from './utils'
 
 const DEBOUNCE_MS = 25
 
@@ -37,7 +38,9 @@ export function getSyncingDataset(
     stagedDocs = undefined
     flushTimeout = undefined
     previousTrx = undefined
-    onNotifyUpdate(overlayDrafts ? overlay(docs) : docs)
+    const finalDocs = overlayDrafts ? overlay(docs) : docs
+    finalDocs.sort((a, b) => compareString(a._id, b._id))
+    onNotifyUpdate(finalDocs)
   }
 
   if (!useListener) {
@@ -188,7 +191,7 @@ function overlay(documents: SanityDocument[]): SanityDocument[] {
       overlayed.set(getPublishedId(doc), pretendThatItsPublished(doc))
     } else if (!existing) {
       // Published documents only override if draft doesn't exist
-      overlayed.set(doc._id, doc)
+      overlayed.set(doc._id, {...doc, _originalId: doc._id})
     }
   })
 
@@ -198,5 +201,5 @@ function overlay(documents: SanityDocument[]): SanityDocument[] {
 // Strictly speaking it would be better to allow groq-js to resolve `draft.<id>`,
 // but for now this will have to do
 function pretendThatItsPublished(doc: SanityDocument): SanityDocument {
-  return {...doc, _id: getPublishedId(doc)}
+  return {...doc, _id: getPublishedId(doc), _originalId: doc._id}
 }
