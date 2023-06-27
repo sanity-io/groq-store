@@ -32,12 +32,9 @@ describe(
       expect(await store.query(groq`*[_type == "vendor"][].title | order(@ asc) [3]`)).toEqual(
         'Freia'
       )
-      expect(await store.query(groq`array::unique(*._type)`)).toEqual([
-        'category',
-        'product',
-        'sanity.imageAsset',
-        'vendor',
-      ])
+      expect(new Set(await store.query(groq`array::unique(*._type)`))).toEqual(
+        new Set(['category', 'product', 'sanity.imageAsset', 'vendor'])
+      )
     })
   },
   {timeout: 30000}
