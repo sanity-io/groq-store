@@ -5,6 +5,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.0](https://github.com/sanity-io/groq-store/compare/v2.1.0...v2.2.0) (2023-06-27)
+
+### Features
+
+- parity between overlayDrafts and perspectives=previewDrafts ([#92](https://github.com/sanity-io/groq-store/issues/92)) ([4e85b4f](https://github.com/sanity-io/groq-store/commit/4e85b4f656a2cf774d8d50f9d7b407e720bed022))
+
+### Bug Fixes
+
+- **docs:** the default `listen` value is `false` ([7264c50](https://github.com/sanity-io/groq-store/commit/7264c509c33e3d7d495f2072f7900d7d89a2e343))
+
 ## [2.1.0](https://github.com/sanity-io/groq-store/compare/v2.0.9...v2.1.0) (2023-03-22)
 
 ### Features
