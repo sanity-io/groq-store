@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/sanity-io/groq-store/compare/v2.2.0...v2.2.1) (2023-06-28)
+
+### Bug Fixes
+
+- apply `includeTypes` to the `listen` query ([#91](https://github.com/sanity-io/groq-store/issues/91)) ([2fed96b](https://github.com/sanity-io/groq-store/commit/2fed96baa570a2608c891e3100fade7aef8215c1))
+
 ## [2.2.0](https://github.com/sanity-io/groq-store/compare/v2.1.0...v2.2.0) (2023-06-27)
 
 ### Features
