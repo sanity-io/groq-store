@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.0](https://github.com/sanity-io/groq-store/compare/v2.2.2...v2.3.0) (2023-06-28)
+
+### Features
+
+- add support for `requestTagPrefix ` ([508639e](https://github.com/sanity-io/groq-store/commit/508639e64de2216dde7eba57c09667e83d231760))
+
 ## [2.2.2](https://github.com/sanity-io/groq-store/compare/v2.2.1...v2.2.2) (2023-06-28)
 
 ### Bug Fixes
