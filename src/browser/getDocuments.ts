@@ -10,17 +10,22 @@ export const getDocuments: EnvImplementations['getDocuments'] = async function g
   token,
   documentLimit,
   includeTypes = [],
+  requestTagPrefix,
 }: {
   projectId: string
   dataset: string
   token?: string
   documentLimit?: number
   includeTypes?: string[]
+  requestTagPrefix?: string
 }): Promise<SanityDocument[]> {
-  const baseUrl = `https://${projectId}.api.sanity.io/v1/data/export/${dataset}`
-  const params =
-    includeTypes.length > 0 ? new URLSearchParams({types: includeTypes?.join(',')}) : ''
-  const url = `${baseUrl}?${params}`
+  const url = new URL(`https://${projectId}.api.sanity.io/v1/data/export/${dataset}`)
+  if (requestTagPrefix) {
+    url.searchParams.set('tag', requestTagPrefix)
+  }
+  if (includeTypes.length > 0) {
+    url.searchParams.set('types', includeTypes?.join(','))
+  }
   const headers = token ? {Authorization: `Bearer ${token}`} : undefined
   const response = await fetch(url, {credentials: 'include', headers})
 

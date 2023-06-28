@@ -24,6 +24,7 @@ export function getSyncingDataset(
     documentLimit,
     token,
     includeTypes,
+    requestTagPrefix,
   } = config
 
   // We don't want to flush updates while we're in the same transaction, so a normal
@@ -44,7 +45,14 @@ export function getSyncingDataset(
   }
 
   if (!useListener) {
-    const loaded = getDocuments({projectId, dataset, documentLimit, token, includeTypes})
+    const loaded = getDocuments({
+      projectId,
+      dataset,
+      documentLimit,
+      token,
+      includeTypes,
+      requestTagPrefix,
+    })
       .then(onUpdate)
       .then(noop)
     return {unsubscribe: noop, loaded}
@@ -67,7 +75,14 @@ export function getSyncingDataset(
   })
 
   const onOpen = async () => {
-    const initial = await getDocuments({projectId, dataset, documentLimit, token, includeTypes})
+    const initial = await getDocuments({
+      projectId,
+      dataset,
+      documentLimit,
+      token,
+      includeTypes,
+      requestTagPrefix,
+    })
     documents = applyBufferedMutations(initial, buffer)
     documents.forEach((doc) => indexedDocuments.set(doc._id, doc))
     onUpdate(documents)

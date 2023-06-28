@@ -43,13 +43,16 @@ const addEventSourceListener = (
 const encodeQueryString = ({
   query,
   params = {},
-  options = {effectFormat: 'mendoza'},
+  options = {},
 }: {
   query: string
   params?: Record<string, unknown>
   options?: Record<string, unknown>
 }) => {
   const searchParams = new URLSearchParams()
+  // We generally want tag at the start of the query string
+  const {tag, ...opts} = options
+  if (tag) searchParams.set('tag', tag as string)
   searchParams.set('query', query)
 
   // Iterate params, the keys are prefixed with `$` and their values JSON stringified
@@ -57,7 +60,7 @@ const encodeQueryString = ({
     searchParams.set(`$${key}`, JSON.stringify(value))
   }
   // Options are passed as-is
-  for (const [key, value] of Object.entries(options)) {
+  for (const [key, value] of Object.entries(opts)) {
     // Skip falsy values
     if (value) searchParams.set(key, `${value}`)
   }
@@ -74,14 +77,21 @@ export function listen(
     next: (event: MutationEvent) => void
   }
 ): Subscription {
-  const {projectId, dataset, token, includeTypes} = config
+  const {projectId, dataset, token, includeTypes, requestTagPrefix} = config
   const headers = token ? {Authorization: `Bearer ${token}`} : undefined
 
   // Make sure we only listen to mutations on documents part of the `includeTypes` allowlist, if provided
+  const options = requestTagPrefix
+    ? {tag: requestTagPrefix, effectFormat: 'mendoza'}
+    : {effectFormat: 'mendoza'}
   const searchParams = encodeQueryString(
     Array.isArray(includeTypes) && includeTypes.length > 0
-      ? {query: `*[_type in $includeTypes]`, params: {includeTypes}}
-      : {query: '*'}
+      ? {
+          query: `*[_type in $includeTypes]`,
+          params: {includeTypes},
+          options,
+        }
+      : {query: '*', options}
   )
   const url = `https://${projectId}.api.sanity.io/v1/data/listen/${dataset}${searchParams}`
   const es = new EventSourceImpl(url, {withCredentials: true, headers})

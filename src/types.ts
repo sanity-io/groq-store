@@ -34,7 +34,10 @@ export interface GroqSubscription {
 export interface EnvImplementations {
   EventSource: typeof NodeEventSource | typeof BrowserEventSource | typeof window.EventSource
   getDocuments: (
-    options: Pick<Config, 'projectId' | 'dataset' | 'token' | 'documentLimit' | 'includeTypes'>
+    options: Pick<
+      Config,
+      'projectId' | 'dataset' | 'token' | 'documentLimit' | 'includeTypes' | 'requestTagPrefix'
+    >
   ) => Promise<SanityDocument[]>
 }
 
@@ -77,6 +80,7 @@ export interface Config {
    * @example ['page', 'product', 'sanity.imageAsset']
    */
   includeTypes?: string[]
+  requestTagPrefix?: string
 }
 
 /** @public */
