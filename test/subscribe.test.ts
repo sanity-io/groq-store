@@ -192,7 +192,7 @@ describe.runIf(config.token)(
             default:
               throw new Error(`Encountered more updates than expected (${numUpdates})`)
           }
-        }
+        },
       )
 
       function runAssertions() {
@@ -203,5 +203,5 @@ describe.runIf(config.token)(
       return waiter
     })
   },
-  {timeout: 15000}
+  {timeout: 15000},
 )

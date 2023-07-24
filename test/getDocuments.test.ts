@@ -22,7 +22,7 @@ describe('getDocuments', () => {
     expect(getDocuments).toBeCalledWith(
       expect.objectContaining({
         token: 'my-token',
-      })
+      }),
     )
   })
 })

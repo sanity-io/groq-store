@@ -14,7 +14,7 @@ function noop() {
 export function getSyncingDataset(
   config: Config,
   onNotifyUpdate: (docs: SanityDocument[]) => void,
-  {getDocuments, EventSource}: EnvImplementations
+  {getDocuments, EventSource}: EnvImplementations,
 ): Subscription & {loaded: Promise<void>} {
   const {
     projectId,
@@ -154,7 +154,7 @@ export function getSyncingDataset(
 
 function applyBufferedMutations(
   documents: SanityDocument[],
-  mutations: MutationEvent[]
+  mutations: MutationEvent[],
 ): SanityDocument[] {
   // Group by document ID
   const groups = new Map<string, MutationEvent[]>()

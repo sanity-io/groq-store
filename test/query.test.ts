@@ -30,10 +30,10 @@ describe(
       ])
 
       expect(await store.query(groq`*[_type == "vendor"][].title | order(@ asc) [3]`)).toEqual(
-        'Freia'
+        'Freia',
       )
       expect(new Set(await store.query(groq`array::unique(*._type)`))).toEqual(
-        new Set(['category', 'product', 'sanity.imageAsset', 'vendor'])
+        new Set(['category', 'product', 'sanity.imageAsset', 'vendor']),
       )
     })
 
@@ -57,7 +57,7 @@ describe(
       ])
     })
   },
-  {timeout: 30000}
+  {timeout: 30000},
 )
 
 describe('query without overlayDrafts', () => {

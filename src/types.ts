@@ -37,7 +37,7 @@ export interface EnvImplementations {
     options: Pick<
       Config,
       'projectId' | 'dataset' | 'token' | 'documentLimit' | 'includeTypes' | 'requestTagPrefix'
-    >
+    >,
   ) => Promise<SanityDocument[]>
 }
 
@@ -91,7 +91,7 @@ export interface GroqStore {
   subscribe: <R = any>(
     groqQuery: string,
     params: Record<string, unknown>,
-    callback: (err: Error | undefined, result?: R) => void
+    callback: (err: Error | undefined, result?: R) => void,
   ) => Subscription
   close: () => Promise<void>
 }

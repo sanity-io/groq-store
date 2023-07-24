@@ -21,7 +21,7 @@ export function groqStore(config: Config, envImplementations: EnvImplementations
           documents = docs
           executeThrottled()
         },
-        envImplementations
+        envImplementations,
       )
     }
 
@@ -49,7 +49,7 @@ export function groqStore(config: Config, envImplementations: EnvImplementations
   function subscribe<R = any>(
     groqQuery: string,
     params: Record<string, unknown>,
-    callback: (error: Error | undefined, result?: R) => void
+    callback: (error: Error | undefined, result?: R) => void,
   ): Subscription {
     if (!config.listen) {
       throw new Error('Cannot use `subscribe()` without `listen: true`')

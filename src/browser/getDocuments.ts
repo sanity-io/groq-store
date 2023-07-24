@@ -52,7 +52,7 @@ export const getDocuments: EnvImplementations['getDocuments'] = async function g
     if (documentLimit && documents.length > documentLimit) {
       reader.cancel('Reached document limit')
       throw new Error(
-        `Error streaming dataset: Reached limit of ${documentLimit} documents. Try using the includeTypes option to reduce the amount of documents, or increase the limit.`
+        `Error streaming dataset: Reached limit of ${documentLimit} documents. Try using the includeTypes option to reduce the amount of documents, or increase the limit.`,
       )
     }
   } while (!result.done)

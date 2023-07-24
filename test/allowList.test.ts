@@ -21,5 +21,5 @@ describe(
       expect(await store.query(groq`count(*[_type == "product"])`)).toEqual(11)
     })
   },
-  {timeout: 30000}
+  {timeout: 30000},
 )

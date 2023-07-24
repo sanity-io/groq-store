@@ -12,13 +12,13 @@ export function groqStore(config: Config): GroqStore {
   if (config.token) {
     if (!config.EventSource) {
       throw new Error(
-        'When the `token` option is used the `EventSource` option must also be provided.'
+        'When the `token` option is used the `EventSource` option must also be provided.',
       )
     }
     if (config.EventSource === window.EventSource)
       throw new Error(
         'When the `token` option is used the `EventSource` option must also be provided. ' +
-          'EventSource cannot be `window.EventSource`, as it does not support passing a token.'
+          'EventSource cannot be `window.EventSource`, as it does not support passing a token.',
       )
   }
 

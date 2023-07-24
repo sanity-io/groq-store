@@ -17,20 +17,20 @@ declare module 'event-source-polyfill' {
 }
 
 const isNativeBrowserEventSource = (
-  eventSource: EventSourceInstance
+  eventSource: EventSourceInstance,
 ): eventSource is InstanceType<typeof globalThis.EventSource> =>
   typeof window !== 'undefined' &&
   eventSource.addEventListener === window.EventSource.prototype.addEventListener
 
 const isPolyfillEventSource = (
-  eventSource: EventSourceInstance
+  eventSource: EventSourceInstance,
 ): eventSource is InstanceType<typeof BrowserEventSource | typeof NodeEventSource> =>
   !isNativeBrowserEventSource(eventSource)
 
 const addEventSourceListener = (
   eventSource: EventSourceInstance,
   type: keyof SharedEventSourceEventMap,
-  listener: EventListener
+  listener: EventListener,
 ): void => {
   if (isPolyfillEventSource(eventSource)) {
     // Polyfilled event source does not accept option parameter
@@ -75,7 +75,7 @@ export function listen(
     open: () => void
     error: (err: Error) => void
     next: (event: MutationEvent) => void
-  }
+  },
 ): Subscription {
   const {projectId, dataset, token, includeTypes, requestTagPrefix} = config
   const headers = token ? {Authorization: `Bearer ${token}`} : undefined
@@ -91,7 +91,7 @@ export function listen(
           params: {includeTypes},
           options,
         }
-      : {query: '*', options}
+      : {query: '*', options},
   )
   const url = `https://${projectId}.api.sanity.io/v1/data/listen/${dataset}${searchParams}`
   const es = new EventSourceImpl(url, {withCredentials: true, headers})
@@ -112,7 +112,7 @@ export function listen(
     }
 
     handlers.error(
-      new Error(data.message || data.error || `Listener returned HTTP ${data.statusCode}`)
+      new Error(data.message || data.error || `Listener returned HTTP ${data.statusCode}`),
     )
   })
 
@@ -122,8 +122,8 @@ export function listen(
     const errorMessage = isErrorLike(err) ? ` (${err.message})` : ''
     handlers.error(
       new Error(
-        `Error establishing listener - check that the project ID and dataset are correct${hintSuffix}${errorMessage}`
-      )
+        `Error establishing listener - check that the project ID and dataset are correct${hintSuffix}${errorMessage}`,
+      ),
     )
   })
 

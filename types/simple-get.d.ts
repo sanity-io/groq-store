@@ -11,7 +11,7 @@ declare module 'simple-get' {
 
   function simpleGet(
     options: Options,
-    callback: (err: Error | undefined, res: IncomingMessage) => void
+    callback: (err: Error | undefined, res: IncomingMessage) => void,
   ): void
 
   export = simpleGet

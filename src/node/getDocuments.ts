@@ -64,7 +64,7 @@ export const getDocuments: EnvImplementations['getDocuments'] = function getDocu
 
           if (documentLimit && documents.length > documentLimit) {
             reject(
-              new Error(`Error streaming dataset: Reached limit of ${documentLimit} documents`)
+              new Error(`Error streaming dataset: Reached limit of ${documentLimit} documents`),
             )
             response.destroy()
           }

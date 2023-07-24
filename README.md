@@ -79,7 +79,7 @@ const sub = store.subscribe(
     }
 
     console.log('Result:', result)
-  }
+  },
 )
 
 // Later, to close subscription:
