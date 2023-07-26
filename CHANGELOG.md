@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.1](https://github.com/sanity-io/groq-store/compare/v2.3.0...v2.3.1) (2023-07-26)
+
+### Bug Fixes
+
+- add provenance ([024cb5d](https://github.com/sanity-io/groq-store/commit/024cb5d68e15111e7896801f4bcf4cb8367c76ef))
+
 ## [2.3.0](https://github.com/sanity-io/groq-store/compare/v2.2.2...v2.3.0) (2023-06-28)
 
 ### Features
