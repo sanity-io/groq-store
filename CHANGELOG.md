@@ -5,6 +5,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/sanity-io/groq-store/compare/v3.0.0...v4.0.0) (2023-08-04)
+
+### ⚠ BREAKING CHANGES
+
+- **deps:** update dependency `mendoza` to 3.0.1
+
+### Bug Fixes
+
+- **deps:** update dependency `mendoza` to 3.0.1 ([154f0b0](https://github.com/sanity-io/groq-store/commit/154f0b079bb70cb191a05db10d16ebe9e2a23aa6))
+
 ## [3.0.0](https://github.com/sanity-io/groq-store/compare/v2.3.4...v3.0.0) (2023-08-04)
 
 ### ⚠ BREAKING CHANGES
