@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.2](https://github.com/sanity-io/groq-store/compare/v2.3.1...v2.3.2) (2023-08-04)
+
+### Bug Fixes
+
+- **deps:** narrow semver ranges for better resilience against wild userland node_modules ([363ba3c](https://github.com/sanity-io/groq-store/commit/363ba3ca6bf4e70bbdc7d45273d53708d8e50056))
+
 ## [2.3.1](https://github.com/sanity-io/groq-store/compare/v2.3.0...v2.3.1) (2023-07-26)
 
 ### Bug Fixes
