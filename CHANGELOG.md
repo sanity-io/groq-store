@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.3](https://github.com/sanity-io/groq-store/compare/v4.0.2...v4.0.3) (2023-08-07)
+
+### Bug Fixes
+
+- add `node.module` export condition ([b7ec069](https://github.com/sanity-io/groq-store/commit/b7ec06943c6af995997918daa5abb95a5fa65fb7))
+- **deps:** Update dependency groq-js to v1.1.11 ([#110](https://github.com/sanity-io/groq-store/issues/110)) ([2b8f065](https://github.com/sanity-io/groq-store/commit/2b8f06566b7c17b4d6bef959d090f07de163b949))
+
 ## [4.0.2](https://github.com/sanity-io/groq-store/compare/v4.0.1...v4.0.2) (2023-08-04)
 
 ### Bug Fixes
