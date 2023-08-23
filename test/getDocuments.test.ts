@@ -1,8 +1,9 @@
 import EventSource from '@sanity/eventsource'
+import {describe, expect, it, vi} from 'vitest'
+
 import {groqStore as groqStoreApi} from '../src/groqStore'
 import {Config} from '../src/types'
 import * as baseConfig from './config'
-import {describe, it, vi, expect} from 'vitest'
 
 describe('getDocuments', () => {
   it('calls it with the configured token', async () => {

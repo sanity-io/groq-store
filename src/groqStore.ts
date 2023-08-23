@@ -1,17 +1,18 @@
-import groq from 'groq'
+import type {SanityDocument} from '@sanity/types'
 import deepEqual from 'fast-deep-equal'
+import groq from 'groq'
+import {type DereferenceFunction, evaluate, parse} from 'groq-js'
 import {throttle} from 'throttle-debounce'
-import {SanityDocument} from '@sanity/types'
-import {parse, evaluate} from 'groq-js'
-import {Config, EnvImplementations, GroqSubscription, GroqStore, Subscription} from './types'
+
 import {getSyncingDataset} from './syncingDataset'
+import type {Config, EnvImplementations, GroqStore, GroqSubscription, Subscription} from './types'
 
 export function groqStore(config: Config, envImplementations: EnvImplementations): GroqStore {
   let documents: SanityDocument[] = []
   const executeThrottled = throttle(config.subscriptionThrottleMs || 50, executeAllSubscriptions)
   const activeSubscriptions: GroqSubscription[] = []
 
-  let dataset: Subscription & {loaded: Promise<void>}
+  let dataset: Subscription & {loaded: Promise<void>; dereference: DereferenceFunction}
 
   async function loadDataset() {
     if (!dataset) {
@@ -31,7 +32,11 @@ export function groqStore(config: Config, envImplementations: EnvImplementations
   async function query<R = any>(groqQuery: string, params?: Record<string, unknown>): Promise<R> {
     await loadDataset()
     const tree = parse(groqQuery, {params})
-    const result = await evaluate(tree as any, {dataset: documents, params})
+    const result = await evaluate(tree as any, {
+      dataset: documents,
+      params,
+      dereference: dataset.dereference,
+    })
     return result.get()
   }
 

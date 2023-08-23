@@ -28,5 +28,5 @@ export function groqStore(config: Config): GroqStore {
   })
 }
 
+export type {EnvImplementations, GroqStore, Subscription} from '../types'
 export {default as groq} from 'groq'
-export type {Subscription, GroqStore, EnvImplementations} from '../types'

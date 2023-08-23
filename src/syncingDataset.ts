@@ -1,6 +1,8 @@
 import {SanityDocument} from '@sanity/types'
-import {listen} from './listen'
+import type {DereferenceFunction} from 'groq-js'
+
 import {getPublishedId} from './drafts'
+import {listen} from './listen'
 import {applyPatchWithoutRev} from './patch'
 import {Config, EnvImplementations, MutationEvent, Subscription} from './types'
 import {compareString} from './utils'
@@ -15,7 +17,7 @@ export function getSyncingDataset(
   config: Config,
   onNotifyUpdate: (docs: SanityDocument[]) => void,
   {getDocuments, EventSource}: EnvImplementations,
-): Subscription & {loaded: Promise<void>} {
+): Subscription & {loaded: Promise<void>; dereference: DereferenceFunction} {
   const {
     projectId,
     dataset,
@@ -43,6 +45,7 @@ export function getSyncingDataset(
     finalDocs.sort((a, b) => compareString(a._id, b._id))
     onNotifyUpdate(finalDocs)
   }
+  const dereference: DereferenceFunction = ({_ref}) => Promise.resolve(indexedDocuments.get(_ref))
 
   if (!useListener) {
     const loaded = getDocuments({
@@ -55,7 +58,7 @@ export function getSyncingDataset(
     })
       .then(onUpdate)
       .then(noop)
-    return {unsubscribe: noop, loaded}
+    return {unsubscribe: noop, loaded, dereference}
   }
 
   const indexedDocuments = new Map<string, SanityDocument>()
@@ -149,7 +152,7 @@ export function getSyncingDataset(
     }
   }
 
-  return {unsubscribe: listener.unsubscribe, loaded}
+  return {unsubscribe: listener.unsubscribe, loaded, dereference}
 }
 
 function applyBufferedMutations(

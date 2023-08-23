@@ -1,4 +1,5 @@
 import {SanityDocument} from '@sanity/types'
+
 import {ApiError, StreamError, StreamResult} from './types'
 
 export function isStreamError(result: StreamResult | undefined): result is StreamError {

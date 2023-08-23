@@ -1,6 +1,7 @@
-import {Subscription, MutationEvent, Config, ApiError, EnvImplementations} from './types'
 import type BrowserEventSource from '@sanity/eventsource/browser'
 import type NodeEventSource from '@sanity/eventsource/node'
+
+import {ApiError, Config, EnvImplementations, MutationEvent, Subscription} from './types'
 
 type EventSourceInstance = InstanceType<EnvImplementations['EventSource']>
 

@@ -1,8 +1,9 @@
-import split from 'split2'
-import get from 'simple-get'
 import {SanityDocument} from '@sanity/types'
-import {EnvImplementations, StreamResult} from '../types'
+import get from 'simple-get'
+import split from 'split2'
+
 import {getError, isRelevantDocument, isStreamError} from '../exportUtils'
+import {EnvImplementations, StreamResult} from '../types'
 
 export const getDocuments: EnvImplementations['getDocuments'] = function getDocuments({
   projectId,

@@ -1,7 +1,8 @@
-import * as config from './config'
-import {groqStore, groq} from '../src'
+import {afterAll, beforeAll, describe, expect, test} from 'vitest'
+
+import {groq, groqStore} from '../src'
 import {GroqStore} from '../src/types'
-import {describe, beforeAll, afterAll, test, expect} from 'vitest'
+import * as config from './config'
 
 describe(
   'allowList',

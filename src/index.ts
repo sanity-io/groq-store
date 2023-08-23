@@ -2,10 +2,11 @@
  * Note: Entry point for _browser_ build is in browser/index.ts
  */
 import EventSourcePolyfill from '@sanity/eventsource/node'
+
 import {groqStore as groqStoreApi} from './groqStore'
-import {Config, GroqStore} from './types'
 import {getDocuments} from './node/getDocuments'
 import {assertEnvSupport} from './node/support'
+import {Config, GroqStore} from './types'
 
 /** @public */
 export function groqStore(config: Config): GroqStore {
@@ -17,5 +18,5 @@ export function groqStore(config: Config): GroqStore {
   })
 }
 
+export type {Config, EnvImplementations, GroqStore, Subscription} from './types'
 export {default as groq} from 'groq'
-export type {Subscription, GroqStore, Config, EnvImplementations} from './types'

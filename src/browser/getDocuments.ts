@@ -1,4 +1,5 @@
 import {SanityDocument} from '@sanity/types'
+
 import {EnvImplementations} from '../types'
 
 type StreamError = {error: {description?: string; type: string}}

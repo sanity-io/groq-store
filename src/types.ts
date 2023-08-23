@@ -1,6 +1,6 @@
-import type {SanityDocument} from '@sanity/types'
 import type BrowserEventSource from '@sanity/eventsource/browser'
 import type NodeEventSource from '@sanity/eventsource/node'
+import type {SanityDocument} from '@sanity/types'
 
 /** @public */
 export interface Subscription {

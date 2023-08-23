@@ -1,7 +1,8 @@
 import {createClient, SanityClient} from '@sanity/client'
+import {afterAll, beforeAll, describe, expect, test} from 'vitest'
+
+import {groq, GroqStore, groqStore} from '../src'
 import * as config from './config'
-import {groqStore, groq, GroqStore} from '../src'
-import {describe, beforeAll, afterAll, test, expect} from 'vitest'
 
 describe.runIf(config.token)(
   'subscribe',
