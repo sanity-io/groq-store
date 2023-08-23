@@ -1,7 +1,7 @@
 import {SanityDocument} from '@sanity/types'
 import type {DereferenceFunction} from 'groq-js'
 
-import {getPublishedId} from './drafts'
+import {getPublishedId, isDraft} from './drafts'
 import {listen} from './listen'
 import {applyPatchWithoutRev} from './patch'
 import {Config, EnvImplementations, MutationEvent, Subscription} from './types'
@@ -45,7 +45,18 @@ export function getSyncingDataset(
     finalDocs.sort((a, b) => compareString(a._id, b._id))
     onNotifyUpdate(finalDocs)
   }
-  const dereference: DereferenceFunction = ({_ref}) => Promise.resolve(indexedDocuments.get(_ref))
+  const dereference: DereferenceFunction = overlayDrafts
+    ? ({_ref}) => {
+        const doc = indexedDocuments.get(`drafts.${_ref}`) || indexedDocuments.get(_ref)
+        if (!doc) {
+          return Promise.resolve(doc)
+        }
+        if (isDraft(doc)) {
+          return Promise.resolve(pretendThatItsPublished(doc))
+        }
+        return Promise.resolve({...doc, _originalId: doc._id})
+      }
+    : ({_ref}) => Promise.resolve(indexedDocuments.get(_ref))
 
   if (!useListener) {
     const loaded = getDocuments({
@@ -216,7 +227,7 @@ function overlay(documents: SanityDocument[]): SanityDocument[] {
   return Array.from(overlayed.values())
 }
 
-// Strictly speaking it would be better to allow groq-js to resolve `draft.<id>`,
+// Strictly speaking it would be better to allow groq-js to resolve `drafts.<id>`,
 // but for now this will have to do
 function pretendThatItsPublished(doc: SanityDocument): SanityDocument {
   return {...doc, _id: getPublishedId(doc), _originalId: doc._id}
