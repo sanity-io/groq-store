@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.1](https://github.com/sanity-io/groq-store/compare/v4.1.0...v4.1.1) (2023-08-23)
+
+### Bug Fixes
+
+- better previewDrafts support in dereference ([469798b](https://github.com/sanity-io/groq-store/commit/469798b06a8cc295c8679daeaa3310e0048725db))
+
 ## [4.1.0](https://github.com/sanity-io/groq-store/compare/v4.0.4...v4.1.0) (2023-08-23)
 
 ### Features
