@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.0](https://github.com/sanity-io/groq-store/compare/v4.0.4...v4.1.0) (2023-08-23)
+
+### Features
+
+- implement `dereference` optimization ([acd526a](https://github.com/sanity-io/groq-store/commit/acd526ae3e552503558cde884ae934be391b54dd))
+
 ## [4.0.4](https://github.com/sanity-io/groq-store/compare/v4.0.3...v4.0.4) (2023-08-10)
 
 ### Bug Fixes
