@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.3](https://github.com/sanity-io/groq-store/compare/v4.1.2...v4.1.3) (2023-10-12)
+
+### Bug Fixes
+
+- bump node engines to 18 ([bd8e9c0](https://github.com/sanity-io/groq-store/commit/bd8e9c09bde4ff85c178f025e335023ff481e02c))
+
 ## [4.1.2](https://github.com/sanity-io/groq-store/compare/v4.1.1...v4.1.2) (2023-09-19)
 
 ### Bug Fixes
