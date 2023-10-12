@@ -67,8 +67,6 @@ jobs:
         node: [lts/*]
         include:
           - os: ubuntu-latest
-            node: 14
-          - os: ubuntu-latest
             node: current
         exclude:
           - os: ubuntu-latest
