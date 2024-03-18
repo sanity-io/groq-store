@@ -93,7 +93,7 @@
     "eslint-config-sanity": "^7.0.1",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-simple-import-sort": "^12.0.0",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
     "ls-engines": "^0.9.1",
