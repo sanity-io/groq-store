@@ -80,7 +80,7 @@
     "@commitlint/cli": "^19.2.0",
     "@commitlint/config-conventional": "^19.1.0",
     "@sanity/client": "^6.15.5",
-    "@sanity/pkg-utils": "^3.0.0",
+    "@sanity/pkg-utils": "^5.1.12",
     "@sanity/semantic-release-preset": "^4.1.7",
     "@types/node": "^18.18.4",
     "@types/split2": "^4.2.3",
